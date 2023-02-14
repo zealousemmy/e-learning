@@ -20,7 +20,7 @@ const ASideComp = () => {
       <ul className="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
         {sideArr.map((items) => (
           <li>
-            <NavLink to="#">
+            <NavLink to={items.link}>
               <svg
                 class="mr-2"
                 xmlns="http://www.w3.org/2000/svg"
