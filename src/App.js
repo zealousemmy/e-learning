@@ -5,6 +5,7 @@ import SideBar from "./components/sidebar/sidebar";
 import TopProfileCard from "./components/topProfileCard";
 import Dashboard from "./dashboard/Index";
 import IndexPage from "./dashboard/pages";
+import Bookmark from "./dashboard/pages/bookmark";
 import Courses from "./dashboard/pages/courses";
 import Profile from "./dashboard/pages/profile";
 
@@ -17,6 +18,7 @@ function App() {
         <Route exact index element={<IndexPage />} />
         <Route path="profile" exact element={<Profile />} />
         <Route path="course" exact element={<Courses />} />
+        <Route path="book-mark" exact element={<Bookmark />} />
       </Route>
     </Routes>
   );

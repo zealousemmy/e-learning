@@ -8,7 +8,7 @@ const StudentCourses = () => {
           <a href="course-details.html" className="d-block">
             <img
               class="card-img-top"
-              src="images/img8.jpg"
+              src="/assets/images/img8.jpg"
               alt="Card image cap"
             />
           </a>
@@ -99,7 +99,7 @@ const StudentCourses = () => {
           <a href="course-details.html" className="d-block">
             <img
               class="card-img-top"
-              src="images/img9.jpg"
+              src="/assets/images/img9.jpg"
               alt="Card image cap"
             />
           </a>
