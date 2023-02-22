@@ -1,19 +1,24 @@
-const courses = [
+export const courses = [
   {
     banner: "/assets/images/img8.jpg",
     title: "The Business Intelligence Analyst Course 2021",
     tutor: "Jose Portilla",
     level: "200",
-    ranking: "4.4",
+    rating: "4.4",
     status: "completed",
     duration: "",
     numOfStudents: "20, 3000",
-    saveCourse: false,
-    description: "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
+    saveCourse: true,
+    description:
+      "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
     whatToLearn: [
-        "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
-        "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more."
-    ]
+      "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
+      "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more.",
+      `Learn industry "best practices" in Java software development from a professional Java developer who has worked in the language for 18 years.`,
+      `Be able to demonstrate your understanding of Java to future employers.`,
+      `Be able to sit for and pass the Oracle Java Certificate exam if you choose.`,
+      `Obtain proficiency in Java 8 and Java 11.`,
+    ],
   },
   {
     banner: "/assets/images/img9.jpg",
@@ -25,6 +30,16 @@ const courses = [
     duration: "",
     numOfStudents: "20, 3000",
     saveCourse: false,
+    description:
+      "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
+    whatToLearn: [
+      "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
+      "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more.",
+      `Learn industry "best practices" in Java software development from a professional Java developer who has worked in the language for 18 years.`,
+      `Be able to demonstrate your understanding of Java to future employers.`,
+      `Be able to sit for and pass the Oracle Java Certificate exam if you choose.`,
+      `Obtain proficiency in Java 8 and Java 11.`,
+    ],
   },
   {
     banner: "/assets/images/img10.jpg",
@@ -35,7 +50,38 @@ const courses = [
     status: "completed",
     duration: "",
     numOfStudents: "20, 3000",
-    saveCourse: false,
+    saveCourse: true,
+    description:
+      "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
+    whatToLearn: [
+      "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
+      "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more.",
+      `Learn industry "best practices" in Java software development from a professional Java developer who has worked in the language for 18 years.`,
+      `Be able to demonstrate your understanding of Java to future employers.`,
+      `Be able to sit for and pass the Oracle Java Certificate exam if you choose.`,
+      `Obtain proficiency in Java 8 and Java 11.`,
+    ],
+  },
+  {
+    banner: "/assets/images/img11.jpg",
+    title: "The Business Intelligence Analyst Course 2021",
+    tutor: "Jose Portilla",
+    level: "200",
+    ranking: "4.4",
+    status: "completed",
+    duration: "",
+    numOfStudents: "20, 3000",
+    saveCourse: true,
+    description:
+      "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
+    whatToLearn: [
+      "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
+      "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more.",
+      `Learn industry "best practices" in Java software development from a professional Java developer who has worked in the language for 18 years.`,
+      `Be able to demonstrate your understanding of Java to future employers.`,
+      `Be able to sit for and pass the Oracle Java Certificate exam if you choose.`,
+      `Obtain proficiency in Java 8 and Java 11.`,
+    ],
   },
   {
     banner: "/assets/images/img11.jpg",
@@ -47,16 +93,15 @@ const courses = [
     duration: "",
     numOfStudents: "20, 3000",
     saveCourse: false,
-  },
-  {
-    banner: "/assets/images/img11.jpg",
-    title: "The Business Intelligence Analyst Course 2021",
-    tutor: "Jose Portilla",
-    level: "200",
-    ranking: "4.4",
-    status: "completed",
-    duration: "",
-    numOfStudents: "20, 3000",
-    saveCourse: false,
+    description:
+      "Learn Java In This Course And Become a Computer Programmer. Obtain valuable Core Java Skills And Java Certification",
+    whatToLearn: [
+      "Learn the core Java skills needed to apply for Java developer positions in just 14 hours.",
+      "Acquire essential java basics for transitioning to the Spring Framework, Java EE, Android development and more.",
+      `Learn industry "best practices" in Java software development from a professional Java developer who has worked in the language for 18 years.`,
+      `Be able to demonstrate your understanding of Java to future employers.`,
+      `Be able to sit for and pass the Oracle Java Certificate exam if you choose.`,
+      `Obtain proficiency in Java 8 and Java 11.`,
+    ],
   },
 ];

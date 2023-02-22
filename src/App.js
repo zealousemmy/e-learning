@@ -7,6 +7,7 @@ import Dashboard from "./dashboard/Index";
 import IndexPage from "./dashboard/pages";
 import Bookmark from "./dashboard/pages/bookmark";
 import Courses from "./dashboard/pages/courses";
+import Message from "./dashboard/pages/message";
 import Profile from "./dashboard/pages/profile";
 
 // import SidebarComp from "components/sidebar/SidebarComp";
@@ -19,6 +20,7 @@ function App() {
         <Route path="profile" exact element={<Profile />} />
         <Route path="course" exact element={<Courses />} />
         <Route path="book-mark" exact element={<Bookmark />} />
+        <Route path="messages" exact element={<Message />} />
       </Route>
     </Routes>
   );
