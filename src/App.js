@@ -1,4 +1,7 @@
 import { NavLink, Route, Routes } from "react-router-dom";
+import Home from "./components/pages";
+import Login from "./components/pages/login";
+import SignUp from "./components/pages/signup";
 import { HomePage } from "./components/sidebar/Home";
 import SideComp from "./components/sidebar/Index";
 import SideBar from "./components/sidebar/sidebar";
@@ -15,6 +18,9 @@ import Profile from "./dashboard/pages/profile";
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/dashboard" element={<Dashboard />}>
         <Route exact index element={<IndexPage />} />
         <Route path="profile" exact element={<Profile />} />

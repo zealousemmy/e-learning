@@ -9,7 +9,6 @@ const MobileSidebar = ({ leftValue, handleCloseMenu, navlinkClose }) => {
     <StyledMobileSideNav
       left={leftValue}
       className=" custom-scrollbar-styled main-off-canvas-menu"
-      show="-30rem"
     >
       <div className=" dashboard-off-canvas-menu  custom-scrollbar-styled pt-20px sideBarContainer">
         <button
@@ -22,9 +21,14 @@ const MobileSidebar = ({ leftValue, handleCloseMenu, navlinkClose }) => {
           <i className="la la-times"></i>
         </button>
         <div className="logo-box px-4">
-          <a href="index.html" class="logo">
-            <img src="images/logo.png" alt="logo" />
-          </a>
+          <NavLink to="/dashboard" class="logo" onClick={handleCloseMenu}>
+            <img
+              src="/assets/img/WhatsApp_Image_2023-03-05_at_14.59.16-removebg-preview.png"
+              alt="logo"
+              height={"50"}
+              width={"100%"}
+            />
+          </NavLink>
         </div>
         <ul className="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
           {sideArr.map((items) => (
