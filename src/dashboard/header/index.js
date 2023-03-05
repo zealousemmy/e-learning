@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({handleClick}) => {
   return (
     <div className="header-menu-content dashboard-menu-content pr-30px pl-30px bg-white shadow-sm">
       <div className="container-fluid">
@@ -28,14 +28,15 @@ const Header = () => {
                   >
                     <i className="la la-th-large"></i>
                   </div>
-                  <div
+                  <button
                     class="off-canvas-menu-toggle main-menu-toggle icon-element icon-element-sm shadow-sm"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Main menu"
+                    onClick={handleClick}
                   >
                     <i className="la la-bars"></i>
-                  </div>
+                  </button>
                 </div>
               </div>
               {/* <!-- end logo-box --> */}

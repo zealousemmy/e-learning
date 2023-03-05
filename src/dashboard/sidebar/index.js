@@ -1,9 +1,14 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { sideArr } from "./sidebarArr";
+import { StyledSideComp } from "./style";
+
 const ASideComp = () => {
   return (
-    <div className="off-canvas-menu dashboard-off-canvas-menu off--canvas-menu custom-scrollbar-styled pt-20px">
+    <StyledSideComp
+      show="none"
+      className="off-canvas-menu dashboard-off-canvas-menu off--canvas-menu custom-scrollbar-styled pt-20px"
+    >
       <div
         class="off-canvas-menu-close dashboard-menu-close icon-element icon-element-sm shadow-sm"
         data-toggle="tooltip"
@@ -36,7 +41,7 @@ const ASideComp = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </StyledSideComp>
   );
 };
 
