@@ -1,6 +1,6 @@
 import React from "react";
-
-const Header = ({handleClick}) => {
+import { NavLink } from "react-router-dom";
+const Header = ({ handleClick, handleCloseMenu }) => {
   return (
     <div className="header-menu-content dashboard-menu-content pr-30px pl-30px bg-white shadow-sm">
       <div className="container-fluid">
@@ -8,9 +8,14 @@ const Header = ({handleClick}) => {
           <div className="row align-items-center">
             <div className="col-lg-12">
               <div className="logo-box logo--box">
-                <a href="index.html" class="logo">
-                  <img src="images/logo.png" alt="logo" />
-                </a>
+                <NavLink to="/dashboard" class="logo" onClick={handleCloseMenu}>
+                  <img
+                    src="/assets/img/WhatsApp_Image_2023-03-05_at_14.59.16-removebg-preview.png"
+                    alt="logo"
+                    height={"50"}
+                    width={"100%"}
+                  />
+                </NavLink>
                 <div className="user-btn-action">
                   <div
                     class="search-menu-toggle icon-element icon-element-sm shadow-sm mr-2"

@@ -8,7 +8,7 @@ const TopProfileCard = () => {
           <div className="media-img media--img media-img-md rounded-full">
             <img
               class="rounded-full"
-              src="assets/images/small-avatar-1.jpg"
+              src="/assets/img/1658249799050.jpeg"
               alt="Student thumbnail image"
             />
           </div>

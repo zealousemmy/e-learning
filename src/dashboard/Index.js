@@ -13,7 +13,10 @@ const Dashboard = (props) => {
   };
   return (
     <div>
-      <Header handleClick={handleShowSideBar} />
+      <Header
+        handleClick={handleShowSideBar}
+        handleCloseMenu={handleCloseSideBar}
+      />
       <ASideComp />
       <MobileSidebar
         navlinkClose={handleCloseSideBar}
