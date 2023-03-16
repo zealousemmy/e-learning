@@ -1,6 +1,6 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { NavContainer } from "./styles";
-
 const Navbar = ({ handleClick }) => {
   return (
     <NavContainer className="header-menu-content pr-150px pl-150px bg-white">
@@ -40,25 +40,25 @@ const Navbar = ({ handleClick }) => {
               <nav className="main-menu">
                 <ul>
                   <li>
-                    <a href="#">Home</a>
+                    <NavLink to="/">Home</NavLink>
                   </li>
                 </ul>
                 {/* <!-- end ul --> */}
               </nav>
               {/* <!-- end main-menu --> */}
               <div className="nav-right-button">
-                <a
-                  href="login.html"
+                <NavLink
+                  to="/login"
                   className="btn theme-btn theme-btn-sm lh-26 theme-btn-transparent mr-2"
                 >
                   <i class="la la-sign-in mr-1"></i> Login
-                </a>
-                <a
-                  href="sign-up.html"
+                </NavLink>
+                <NavLink
+                  to="/signup"
                   className="btn theme-btn theme-btn-sm lh-26 shadow-none"
                 >
                   <i class="la la-plus mr-1"></i> Sign up
-                </a>
+                </NavLink>
               </div>
               {/* <!-- end nav-right-button --> */}
             </div>
