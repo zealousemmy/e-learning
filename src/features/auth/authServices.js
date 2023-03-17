@@ -17,7 +17,7 @@ const loginStudent = async (studentData) => {
   const response = await axios.post(`${API_URL}/api/auth/login`, studentData);
   if (response) {
     // localStorage.setItem("e-learning", JSON.stringify(response.data));
-    console.log(response.data);
+    console.log(response.data, "login service returned");
   }
 };
 

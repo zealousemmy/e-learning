@@ -60,6 +60,7 @@ export const authSlice = createSlice({
     },
     [login.pending]: (state, action) => {
       state.isLoading = true;
+      // console.log(action.payload, "pending");
     },
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -72,6 +73,7 @@ export const authSlice = createSlice({
       state.isError = true;
       state.message = action.payload;
       state.user = null;
+      console.log(state.message, "rejected");
     },
   },
 });

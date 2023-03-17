@@ -19,12 +19,16 @@ const LoginForm = () => {
     }));
   };
 
-  const handleLogin = (e) => {
+  console.log(formData);
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const check = loginValidationSchema.isValid(formData);
+    const check = await loginValidationSchema.isValid(formData);
+    console.log(check, "yup checking");
     if (check === true) {
       const studentData = { email, password };
-      dispatch(studentData);
+      console.log(studentData, "login data");
+      dispatch(login(studentData));
+      console.log("working correctly");
     } else {
       toast.error("fields are required please");
     }
