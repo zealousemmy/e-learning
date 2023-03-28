@@ -1,6 +1,6 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { NavContainer } from "./styles";
-
 const Navbar = ({ handleClick }) => {
   return (
     <NavContainer className="header-menu-content pr-150px pl-150px bg-white">
@@ -8,7 +8,7 @@ const Navbar = ({ handleClick }) => {
         <div className="row align-items-center">
           <div className="col-lg-3">
             <div className="logo-box justify-content-between">
-              <a href="index.html" class="logo">
+              <a href="/" class="logo">
                 <img
                   src="/assets/img/WhatsApp_Image_2023-03-05_at_14.59.16-removebg-preview.png"
                   alt="logo"
@@ -37,28 +37,27 @@ const Navbar = ({ handleClick }) => {
           {/* <!-- end col-lg-2 --> */}
           <div className="col-lg-9">
             <div className="menu-wrapper">
-              <nav className="main-menu">
+              {/* <nav className="main-menu">
                 <ul>
                   <li>
-                    <a href="#">Home</a>
+                    <NavLink to="/">Home</NavLink>
                   </li>
                 </ul>
-                {/* <!-- end ul --> */}
-              </nav>
+              </nav> */}
               {/* <!-- end main-menu --> */}
               <div className="nav-right-button">
-                <a
-                  href="login.html"
+                <NavLink
+                  to="/login"
                   className="btn theme-btn theme-btn-sm lh-26 theme-btn-transparent mr-2"
                 >
                   <i class="la la-sign-in mr-1"></i> Login
-                </a>
-                <a
-                  href="sign-up.html"
+                </NavLink>
+                <NavLink
+                  to="/signup"
                   className="btn theme-btn theme-btn-sm lh-26 shadow-none"
                 >
                   <i class="la la-plus mr-1"></i> Sign up
-                </a>
+                </NavLink>
               </div>
               {/* <!-- end nav-right-button --> */}
             </div>
