@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import Header from "./header";
 import ASideComp from "./sidebar";
 import MobileSidebar from "./sidebar/mobileSidebar";
 const Dashboard = (props) => {
+  const isAuthenticated = localStorage.getItem("token");
   const [left, setLeft] = useState(-25);
   const handleShowSideBar = () => {
     left === -25 ? setLeft(0) : setLeft(-25);
@@ -24,7 +25,7 @@ const Dashboard = (props) => {
         handleCloseMenu={handleShowSideBar}
       />
       <div class="dashboard-content-wrap">
-        {props.children}
+        {isAuthenticated ? props.children : <Navigate to="/" />}
         <Outlet />
       </div>
     </div>

@@ -1,6 +1,95 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetRooms } from "../../features/message/messageSlice";
+import { AppContext } from "../../context/appContext";
+import moment from "moment/moment";
 
 const MessageIndex = () => {
+  const dispatch = useDispatch();
+
+  const [change, setChange] = useState(false);
+  const [currentRoom, setCurrentRoom] = useState();
+  const [messages, setMessages] = useState();
+  const [message, setMessage] = useState("");
+
+  const { socket } = useContext(AppContext);
+
+  const { rooms, isLoading, isError, isSuccess } = useSelector(
+    (state) => state.message
+  );
+
+  const { userDetails } = useSelector((state) => state.user);
+
+  console.log(userDetails, "never say never");
+
+  const ShowRoom = async () => {
+    setChange(!change);
+    await dispatch(GetRooms());
+    setChange(!change);
+  };
+
+  useEffect(() => {
+    ShowRoom();
+  }, []);
+
+  const joinRoom = (room) => {
+    socket.emit("join-room", room);
+    setCurrentRoom(room);
+  };
+
+  const getFormattedDate = () => {
+    const date = new Date();
+
+    const year = date.getFullYear();
+
+    let month = (1 + date.getMonth()).toString();
+
+    month = month.length > 1 ? month : "0" + month;
+
+    let day = date.getDate().toString();
+
+    day = day.length > 1 ? day : "0" + day;
+
+    return month + "/" + day + "/" + year;
+  };
+
+  const todayDate = getFormattedDate();
+
+  socket.off("room-messages").on("room-messages", (roomMessages) => {
+    setMessages(roomMessages);
+  });
+
+  const handleinput = (e) => {
+    const { value } = e.target;
+    setMessage(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!message) return;
+
+    let today = new Date();
+
+    const minutes =
+      today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+
+    const time = today.getHours() + ":" + minutes;
+
+    socket.emit(
+      "message-room",
+      currentRoom,
+      message,
+      userDetails,
+      time,
+      todayDate
+    );
+
+    setMessage("");
+  };
+
+  console.log(messages, "never let mec");
+
   return (
     <div className="container-fluid">
       <div className="dashboard-message-wrapper d-flex my-4">
@@ -19,172 +108,40 @@ const MessageIndex = () => {
           </form>
           <div className="message-inbox-item border-bottom border-bottom-gray">
             <div className="notification-body scrolled-box scrolled--box custom-scrollbar-styled">
-              <a
-                href="#"
-                className="media media-card align-items-center message-active"
-              >
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status bg-success position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">
-                    Daniel Hardman{" "}
-                    <span class="badge badge-success p-1 ml-2">2</span>
-                  </h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status bg-success position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
-              <a href="#" className="media media-card align-items-center">
-                <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                  <img
-                    class="rounded-full img-fluid"
-                    src="images/small-avatar-1.jpg"
-                    alt="Avatar image"
-                  />
-                  <span className="dot-status position-absolute bottom-0 right-0"></span>
-                </div>
-                <div className="media-body overflow-hidden">
-                  <h5 className="fs-14">Daniel Hardman</h5>
-                  <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                    How the hell am I supposed to get a jury to believe you when
-                    I am not even sure that I do
-                  </p>
-                  <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                    5 min ago
-                  </span>
-                </div>
-              </a>
+              {rooms?.map((item, key) => (
+                <a
+                  key={key}
+                  className="media media-card align-items-center"
+                  onClick={() => joinRoom(item.course)}
+                  style={{
+                    backgroundColor: `${
+                      currentRoom === item?.course ? "#f3f3f3" : ""
+                    }`,
+                  }}
+                >
+                  <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
+                    <img
+                      class="rounded-full img-fluid"
+                      src="images/small-avatar-1.jpg"
+                      alt="Avatar image"
+                    />
+                    {/* <span className="dot-status position-absolute bottom-0 right-0"></span> */}
+                  </div>
+                  <div className="media-body overflow-hidden">
+                    <h5 className="fs-14">
+                      {item.course}
+                      <span class="badge badge-success p-1 ml-2">2</span>
+                    </h5>
+                    <p className="text-truncate lh-18 pt-1 text-gray fs-13">
+                      How the hell am I supposed to get a jury to believe you
+                      when I am not even sure that I do
+                    </p>
+                    <span class="fs-12 d-block lh-18 pt-1 text-gray">
+                      5 min ago
+                    </span>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
           {/* <!-- end message-inbox-item --> */}
@@ -201,10 +158,10 @@ const MessageIndex = () => {
                 />
               </div>
               <div className="media-body overflow-hidden">
-                <h5 className="fs-14">Daniel Hardman</h5>
-                <span className="fs-12 d-block lh-18 pt-1 text-success">
+                <h5 className="fs-14">{currentRoom}</h5>
+                {/* <span className="fs-12 d-block lh-18 pt-1 text-success">
                   Online
-                </span>
+                </span> */}
               </div>
             </div>
             <div
@@ -218,537 +175,157 @@ const MessageIndex = () => {
           </div>
           {/* <!-- message-header --> */}
           <div className="conversation-wrap">
-            <div className="conversation-box custom-scrollbar-styled">
-              <div className="message-time text-center mb-3">
-                <span className="ribbon">30 Jan, 2020</span>
-              </div>
-              <div className="conversation-item message-sent mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkFour"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkFour"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
+            {messages?.map((item, key) => (
+              <div className="conversation-box custom-scrollbar-styled">
+                <div className="message-time text-center mb-3">
+                  <span className="ribbon">
+                    {moment(item._id).format("MMM DD, YYYY")}
+                  </span>
+                </div>
+
+                {item?.messagesByDate?.map((data, i) => (
+                  <>
+                    {userDetails._id === data?.from?._id ? (
+                      <div className="conversation-item message-sent mb-3">
+                        <div className="media media-card align-items-center">
+                          <div className="avatar-sm flex-shrink-0 mr-4">
+                            <img
+                              class="rounded-full img-fluid"
+                              src="images/small-avatar-1.jpg"
+                              alt="Avatar image"
+                            />
+                          </div>
+                          <div className="media-body d-flex align-items-center">
+                            <div className="generic-action-wrap generic--action-wrap-3">
+                              <div className="dropdown">
+                                <a
+                                  class="action-btn"
+                                  href="#"
+                                  role="button"
+                                  id="dropdownMenuLinkFour"
+                                  data-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                >
+                                  <i className="la la-ellipsis-v"></i>
+                                </a>
+                                <div
+                                  className="dropdown-menu dropdown-menu-right"
+                                  aria-labelledby="dropdownMenuLinkFour"
+                                >
+                                  <a class="dropdown-item" href="#">
+                                    Copy
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Cut
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Edit
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Delete
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="message-body">
+                              <h5
+                                className="fs-13"
+                                style={{
+                                  color: "#f3f3f3",
+                                  display: "flex",
+                                  justifyContent: "flex-end",
+                                }}
+                              >
+                                {data?.from?.fullname}
+                              </h5>
+                              <h5 className="fs-13">{data?.content}</h5>
+                              <span className="fs-12 d-block lh-18 pt-1">
+                                {data?.time} <i class="la la-check ml-1"></i>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">
-                        {" "}
-                        How the hell am I supposed to get a jury to believe you
-                        when I am not even sure that I do? 😒
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkFive"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkFive"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
+                    ) : (
+                      <div className="conversation-item message-reply mb-3">
+                        <div className="media media-card align-items-center">
+                          <div className="avatar-sm flex-shrink-0 mr-4">
+                            <img
+                              class="rounded-full img-fluid"
+                              src="images/small-avatar-1.jpg"
+                              alt="Avatar image"
+                            />
+                          </div>
+                          <div className="media-body d-flex align-items-center">
+                            <div className="generic-action-wrap generic--action-wrap-3">
+                              <div className="dropdown">
+                                <a
+                                  class="action-btn"
+                                  href="#"
+                                  role="button"
+                                  id="dropdownMenuLinkFive"
+                                  data-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                >
+                                  <i className="la la-ellipsis-v"></i>
+                                </a>
+                                <div
+                                  className="dropdown-menu dropdown-menu-right"
+                                  aria-labelledby="dropdownMenuLinkFive"
+                                >
+                                  <a class="dropdown-item" href="#">
+                                    Copy
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Cut
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Edit
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    Delete
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="message-body">
+                              <h5
+                                className="fs-13"
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "flex-start",
+                                }}
+                              >
+                                {data?.from?.fullname}
+                              </h5>
+                              <h5 className="fs-13">{data?.content}</h5>
+                              <span className="fs-12 d-block lh-18 pt-1">
+                                {data?.time} <i class="la la-check ml-1"></i>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">
-                        When you're backed against the wall, break the god damn
-                        thing down.
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                    )}
+                  </>
+                ))}
               </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkSix"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkSix"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">
-                        Excuses don't win championships. 😐
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="message-time text-center mb-3">
-                <span className="ribbon">Yesterday</span>
-              </div>
-              {/* <!-- message-time --> */}
-              <div className="conversation-item message-sent mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkSeven"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkSeven"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">Oh yeah, you said right 👍</h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkEight"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkEight"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 class="fs-13">
-                        Anyway! when i will start working on your project 😎😎😎
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-sent mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkNine"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkNine"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 class="fs-13">
-                        You can start working on project tomorrow 🙂
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkTen"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkTen"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">Ok, i will 😉</h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="message-time text-center mb-3">
-                <span className="ribbon">Today</span>
-              </div>
-              {/* <!-- message-time --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLinkTwo"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLinkTwo"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">
-                        Hi John, I just wanted to let you know that project is
-                        finished
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-sent mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="generic-action-wrap generic--action-wrap-3">
-                      <div className="dropdown">
-                        <a
-                          class="action-btn"
-                          href="#"
-                          role="button"
-                          id="dropdownMenuLink"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i className="la la-ellipsis-v"></i>
-                        </a>
-                        <div
-                          className="dropdown-menu dropdown-menu-right"
-                          aria-labelledby="dropdownMenuLink"
-                        >
-                          <a class="dropdown-item" href="#">
-                            Copy
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Cut
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Edit
-                          </a>
-                          <a class="dropdown-item" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="message-body">
-                      <h5 className="fs-13">
-                        Hi Daniel! I'm actually on vacation 🏖️ until Sunday so I
-                        can't check it now 😎
-                      </h5>
-                      <span className="fs-12 d-block lh-18 pt-1">
-                        11:44 AM <i class="la la-check ml-1"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-              <div className="conversation-item message-reply mb-3">
-                <div className="media media-card align-items-center">
-                  <div className="avatar-sm flex-shrink-0 mr-4">
-                    <img
-                      class="rounded-full img-fluid"
-                      src="images/small-avatar-1.jpg"
-                      alt="Avatar image"
-                    />
-                  </div>
-                  <div className="media-body d-flex align-items-center">
-                    <div className="message-body message-typing">
-                      <h5 className="fs-13">Typing</h5>
-                      <div className="typing-director">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- conversation-item --> */}
-            </div>
+            ))}
+
             {/* <!-- conversation-box --> */}
           </div>
           {/* <!-- conversation-wrap --> */}
           <div className="message-reply-body d-flex align-items-center pt-2 px-4 border-top border-top-gray">
             <form action="#" className="flex-grow-1">
               <textarea
-                class="emoji-picker"
+                // class="emoji-picker"
                 placeholder="Your message"
-                rows="3"
+                rows="2"
+                style={{ flexGrow: 1, width: "70%" }}
+                value={message || ""}
+                onChange={handleinput}
               ></textarea>
             </form>
             <div className="file-upload-wrap file--upload-wrap file-upload-wrap-3">
@@ -766,6 +343,7 @@ const MessageIndex = () => {
             <button
               type="button"
               className="message-send icon-element icon-element-xs bg-1 text-white ml-2 border-0"
+              onClick={handleSubmit}
             >
               <i className="la la-paper-plane"></i>
             </button>

@@ -5,13 +5,21 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { AppContext, socket } from "./context/appContext";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <AppContext.Provider
+        value={{
+          socket,
+        }}
+      >
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </AppContext.Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

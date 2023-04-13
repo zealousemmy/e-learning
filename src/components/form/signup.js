@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { register } from "../../features/auth/authSlice";
 import { signupValidationSchema } from "./validation.schema";
+
 const SignupForm = () => {
   const [formData, setFormData] = useState({
     fullname: "",
@@ -17,18 +18,20 @@ const SignupForm = () => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
       console.log(isError, "from error");
     }
     if (isSuccess) {
-      console.log(message, "from if is success");
       navigate("/login");
     }
   }, []);
+
   const { fullname, email, regno, password, faculty, department } = formData;
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -37,17 +40,15 @@ const SignupForm = () => {
   };
 
   console.log(formData);
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    const check = signupValidationSchema.isValid(formData);
+    console.log(signupValidationSchema.validate(formData), "section");
+    const check = await signupValidationSchema.isValid(formData);
+    console.log(check, "next");
+
     if (check === true) {
       const studentData = {
-        fullname,
-        email,
-        regno,
-        password,
-        faculty,
-        department,
+        ...formData,
       };
       dispatch(register(studentData));
     } else {
@@ -91,7 +92,7 @@ const SignupForm = () => {
                 <div className="form-group">
                   <input
                     class="form-control form--control"
-                    type="number"
+                    type="text"
                     name="regno"
                     placeHolder="Registration Number"
                     onChange={handleChange}
@@ -100,6 +101,7 @@ const SignupForm = () => {
                 </div>
               </div>
               {/* <!-- end input-box --> */}
+
               <div className="input-box">
                 <label className="label-text">Email Address</label>
                 <div className="form-group">
@@ -110,7 +112,8 @@ const SignupForm = () => {
                     placeHolder="Enter email address"
                     onChange={handleChange}
                   />
-                  <span className="la la-user input-icon"></span>
+
+                  <span className="la la-envelope input-icon"></span>
                 </div>
               </div>
 
@@ -124,7 +127,8 @@ const SignupForm = () => {
                     placeHolder="Faculty"
                     onChange={handleChange}
                   />
-                  <span className="la la-envelope input-icon"></span>
+
+                  {/* <span className="la la-user input-icon"></span> */}
                 </div>
               </div>
 

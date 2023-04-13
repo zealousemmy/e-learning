@@ -16,9 +16,21 @@ import Profile from "./dashboard/pages/profile";
 import "react-toastify/dist/ReactToastify.css";
 import Setting from "./dashboard/pages/setting";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { GetUser } from "./features/user/userSlice";
+// import io from "socket.io-client";
 // import SidebarComp from "components/sidebar/SidebarComp";
 
+// const socket = io.connect("http://localhost:5001");
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(GetUser());
+  }, []);
+
   return (
     <>
       <Routes>

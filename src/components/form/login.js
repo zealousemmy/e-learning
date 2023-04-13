@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "../../features/auth/authSlice";
 import { loginValidationSchema } from "./validation.schema";
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess) {
+      console.log("isSuccess");
+      navigate("/dashboard");
+    }
+  }, [isError, isSuccess]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,12 +39,10 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const check = await loginValidationSchema.isValid(formData);
-    console.log(check, "yup checking");
+
     if (check === true) {
       const studentData = { email, password };
-      console.log(studentData, "login data");
       dispatch(login(studentData));
-      console.log("working correctly");
     } else {
       toast.error("fields are required please");
     }
@@ -133,7 +147,7 @@ const LoginForm = () => {
                 </button>
                 <p className="fs-14 pt-2">
                   Don't have an account?{" "}
-                  <a href="sign-up.html" className="text-color hover-underline">
+                  <a href="/signup" className="text-color hover-underline">
                     Register
                   </a>
                 </p>

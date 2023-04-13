@@ -8,7 +8,7 @@ const Navbar = ({ handleClick }) => {
         <div className="row align-items-center">
           <div className="col-lg-3">
             <div className="logo-box justify-content-between">
-              <a href="index.html" class="logo">
+              <a href="/" class="logo">
                 <img
                   src="/assets/img/WhatsApp_Image_2023-03-05_at_14.59.16-removebg-preview.png"
                   alt="logo"
@@ -37,14 +37,13 @@ const Navbar = ({ handleClick }) => {
           {/* <!-- end col-lg-2 --> */}
           <div className="col-lg-9">
             <div className="menu-wrapper">
-              <nav className="main-menu">
+              {/* <nav className="main-menu">
                 <ul>
                   <li>
                     <NavLink to="/">Home</NavLink>
                   </li>
                 </ul>
-                {/* <!-- end ul --> */}
-              </nav>
+              </nav> */}
               {/* <!-- end main-menu --> */}
               <div className="nav-right-button">
                 <NavLink

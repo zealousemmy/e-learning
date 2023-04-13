@@ -25,12 +25,16 @@ export const login = createAsyncThunk(
   "auth/login",
   async (student, thunkAPI) => {
     try {
-      return await authService.loginStudent(student);
+      const data = await authService.loginStudent(student);
+      console.log(data, "resent work");
+
+      return data;
     } catch (err) {
       console.log(err);
     }
   }
 );
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -42,32 +46,38 @@ export const authSlice = createSlice({
       state.message = "";
     },
   },
+
   extraReducers: {
     [register.pending]: (state, action) => {
       state.isLoading = true;
     },
+
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload;
       console.log(state.user, "this is the user's page");
     },
+
     [register.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
       state.user = null;
     },
+
     [login.pending]: (state, action) => {
       state.isLoading = true;
       // console.log(action.payload, "pending");
     },
+
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload;
       console.log(state.user, "this is the user's login slice");
     },
+
     [login.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
