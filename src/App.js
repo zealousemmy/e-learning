@@ -14,6 +14,8 @@ import Courses from "./dashboard/pages/courses";
 import Message from "./dashboard/pages/message";
 import Profile from "./dashboard/pages/profile";
 import "react-toastify/dist/ReactToastify.css";
+import Setting from "./dashboard/pages/setting";
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GetUser } from "./features/user/userSlice";
@@ -41,6 +43,7 @@ function App() {
           <Route path="course" exact element={<Courses />} />
           <Route path="book-mark" exact element={<Bookmark />} />
           <Route path="messages" exact element={<Message />} />
+          <Route path="settings" exact element={<Setting />} />
         </Route>
       </Routes>
       <ToastContainer />

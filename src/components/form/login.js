@@ -15,6 +15,7 @@ const LoginForm = () => {
       toast.error(message);
     }
     if (isSuccess) {
+      console.log("isSuccess");
       navigate("/dashboard");
     }
   }, [isError, isSuccess]);
@@ -41,7 +42,6 @@ const LoginForm = () => {
 
     if (check === true) {
       const studentData = { email, password };
-
       dispatch(login(studentData));
     } else {
       toast.error("fields are required please");
