@@ -14,6 +14,7 @@ const SignupForm = () => {
     faculty: "",
     department: "",
   });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -25,12 +26,12 @@ const SignupForm = () => {
       console.log(isError, "from error");
     }
     if (isSuccess) {
+      toast.success("registration successfully");
       navigate("/login");
     }
   }, []);
 
   const { fullname, email, regno, password, faculty, department } = formData;
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -39,7 +40,7 @@ const SignupForm = () => {
     }));
   };
 
-  console.log(formData);
+  // console.log(formData);
   const handleSignUp = async (e) => {
     e.preventDefault();
     console.log(signupValidationSchema.validate(formData), "section");
@@ -51,6 +52,7 @@ const SignupForm = () => {
         ...formData,
       };
       dispatch(register(studentData));
+      // navigate("/login");
     } else {
       toast.error("input fields required", {
         position: "top-right",
