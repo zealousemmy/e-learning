@@ -93,6 +93,22 @@ const AddCourse = () => {
         <div className="content">
           <div className="content_one">
             <div className="content_one_header">
+              <p>Lecturals Name:</p>
+            </div>
+
+            <div className="content_one_input">
+              <input
+                type={"text"}
+                name={"lectural"}
+                value={course?.lectural || ""}
+                placeholder={"input the name of the course"}
+                onChange={handlechange}
+              />
+            </div>
+          </div>
+
+          <div className="content_one" style={{ marginTop: "20px" }}>
+            <div className="content_one_header">
               <p>Course Name:</p>
             </div>
 

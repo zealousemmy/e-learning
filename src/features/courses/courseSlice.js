@@ -8,11 +8,12 @@ const initialState = {
   message: "",
   checkmodal: false,
   fileDetails: {},
+  mycourses: [],
 };
 
 // register student
 export const uploadCourse = createAsyncThunk(
-  "upload/course",
+  "course/upload",
   async (course, thunkAPI) => {
     try {
       return await courseService.uploadCourse(course);
@@ -22,8 +23,20 @@ export const uploadCourse = createAsyncThunk(
   }
 );
 
+export const myCourses = createAsyncThunk(
+  "course/mycourse",
+  async (course, thunkAPI) => {
+    try {
+      console.log(course, "gadsj");
+      return await courseService.getCourses(course);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const uploadFile = createAsyncThunk(
-  "upload/file",
+  "course/upload",
   async (file, thunkAPI) => {
     try {
       const data = await courseService.uploadFile(file);
@@ -66,6 +79,21 @@ export const courseSlice = createSlice({
     },
 
     [uploadCourse.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+    },
+
+    [myCourses.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+
+    [myCourses.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.mycourses = action.payload;
+    },
+
+    [myCourses.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;

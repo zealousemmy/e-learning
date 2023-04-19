@@ -14,6 +14,7 @@ const loginStudent = async (studentData) => {
   console.log(studentData, "making today better");
   const response = await APIs.post(`/api/auth/login`, studentData);
   if (response) {
+    console.log(response, "na waoo");
     if (response?.data?.data?.message === "success") {
       localStorage.setItem(
         "token",

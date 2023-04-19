@@ -20,8 +20,6 @@ const MessageIndex = () => {
 
   const { userDetails } = useSelector((state) => state.user);
 
-  console.log(userDetails, "never say never");
-
   const ShowRoom = async () => {
     setChange(!change);
     await dispatch(GetRooms());
