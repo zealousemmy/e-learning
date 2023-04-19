@@ -14,9 +14,12 @@ export const register = createAsyncThunk(
   "auth/register",
   async (student, thunkAPI) => {
     try {
+      let checkValidity = await authService.registerStudent(student);
+      console.log(checkValidity);
       return await authService.registerStudent(student);
     } catch (err) {
       console.log(err);
+      return err;
     }
   }
 );
@@ -30,7 +33,8 @@ export const login = createAsyncThunk(
 
       return data;
     } catch (err) {
-      console.log(err);
+      console.log(err, "from error");
+      return err;
     }
   }
 );
@@ -55,7 +59,9 @@ export const authSlice = createSlice({
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
+      console.log(state.isSuccess);
       state.user = action.payload;
+      console.log(state.isSuccess, "success");
       console.log(state.user, "this is the user's page");
     },
 
@@ -63,6 +69,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
+      console.log(state.message, "from state message");
       state.user = null;
     },
 
