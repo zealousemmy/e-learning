@@ -11,7 +11,7 @@ const PasswordTab = () => {
       <div className="setting-body">
         <h3 className="fs-17 font-weight-semi-bold pb-4">Change Password</h3>
         <form method="post" className="row">
-          <div className="input-box col-lg-4">
+          {/* <div className="input-box col-lg-4">
             <label className="label-text">Old Password</label>
             <div className="form-group">
               <input
@@ -22,7 +22,7 @@ const PasswordTab = () => {
               />
               <span className="la la-lock input-icon"></span>
             </div>
-          </div>
+          </div> */}
           {/* <!-- end input-box --> */}
           <div className="input-box col-lg-4">
             <label className="label-text">New Password</label>
