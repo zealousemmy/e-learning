@@ -87,7 +87,7 @@ const ProfileTab = () => {
             </div>
           </div>
           {/* <!-- end input-box --> */}
-          <div className="input-box col-lg-12">
+          <div className="input-box col-lg-6">
             <label className="label-text">Phone Number</label>
             <div className="form-group">
               <input
@@ -97,6 +97,21 @@ const ProfileTab = () => {
                 value="(91) 7547 622250"
               />
               <span className="la la-phone input-icon"></span>
+            </div>
+          </div>
+          {/* <!-- end input-box --> */}
+
+          {/* <!-- end input-box --> */}
+          <div className="input-box col-lg-6">
+            <label className="label-text">Level</label>
+            <div className="form-group">
+              <input
+                class="form-control form--control"
+                type="text"
+                name="text"
+                value="200"
+              />
+              {/* <span className="la la-phone input-icon"></span> */}
             </div>
           </div>
           {/* <!-- end input-box --> */}

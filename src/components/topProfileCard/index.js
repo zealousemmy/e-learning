@@ -16,12 +16,12 @@ const TopProfileCard = () => {
           <div className="media-img media--img media-img-md rounded-full">
             <img
               class="rounded-full"
-              src="/assets/img/1658249799050.jpeg"
+              src="/assets/img/c02ece85-abd7-45c2-beee-ff1849cc5014.jpeg"
               alt="Student thumbnail image"
             />
           </div>
           <div className="media-body">
-            <h2 className="section__title fs-30">Howdy, Tim Buchalka</h2>
+            <h2 className="section__title fs-30">Dickson, Agidi</h2>
             <div className="rating-wrap d-flex align-items-center pt-2">
               <div className="review-stars">
                 <span className="rating-number">4.4</span>
