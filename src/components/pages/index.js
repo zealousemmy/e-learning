@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HomeHeader from "../header";
 import Navbar from "../navbar";
 import MobileNav from "../navbar/mobile";
+import { Navigate } from "react-router-dom";
 
 const Home = () => {
   const [left, setLeft] = useState(-75);
@@ -11,16 +12,23 @@ const Home = () => {
   const handleCloseSideBar = () => {
     setLeft(0);
   };
+  const isAuthenticated = localStorage.getItem("token");
   return (
-    <div className="">
-      <Navbar handleClick={handleShowSideBar} />
-      <MobileNav
-        leftValue={left}
-        handleCloseMenu={handleShowSideBar}
-        navlinkClose={handleCloseSideBar}
-      />
-      <HomeHeader />
-    </div>
+    <>
+      {isAuthenticated ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <div className="">
+          <Navbar handleClick={handleShowSideBar} />
+          <MobileNav
+            leftValue={left}
+            handleCloseMenu={handleShowSideBar}
+            navlinkClose={handleCloseSideBar}
+          />
+          <HomeHeader />
+        </div>
+      )}
+    </>
   );
 };
 

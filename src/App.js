@@ -20,6 +20,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GetUser } from "./features/user/userSlice";
 import CreateLecturer from "./dashboard/pages/create-lecturer";
+import Logout from "./dashboard/pages/logout";
 // import io from "socket.io-client";
 // import SidebarComp from "components/sidebar/SidebarComp";
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="messages" exact element={<Message />} />
           <Route path="settings" exact element={<Setting />} />
           <Route path="create-lecturer" exact element={<CreateLecturer />} />
+          <Route path="logout" exact element={<Logout />} />
         </Route>
       </Routes>
       <ToastContainer />
