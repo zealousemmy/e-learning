@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import courseReducer from "../features/courses/courseSlice";
 import messageReducer from "../features/message/messageSlice";
 import userReducer from "../features/user/userSlice";
+import bookmarkReducer from "../features/bookmark/bookmarkSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     course: courseReducer,
     message: messageReducer,
     user: userReducer,
+    bookmark: bookmarkReducer,
   },
 });

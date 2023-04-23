@@ -10,6 +10,6 @@ export const signupValidationSchema = Yup.object().shape({
 });
 
 export const loginValidationSchema = Yup.object().shape({
-  email: Yup.string().email().required(),
+  regno: Yup.string().required(),
   password: Yup.string().required(),
 });

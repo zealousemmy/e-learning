@@ -21,12 +21,12 @@ const LoginForm = () => {
   }, [isError, isSuccess]);
 
   const [formData, setFormData] = useState({
-    email: "",
+    regno: "",
     password: "",
   });
 
   const dispatch = useDispatch();
-  const { email, password } = formData;
+  const { regno, password } = formData;
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -41,7 +41,7 @@ const LoginForm = () => {
     const check = await loginValidationSchema.isValid(formData);
 
     if (check === true) {
-      const studentData = { email, password };
+      const studentData = { regno, password };
       dispatch(login(studentData));
     } else {
       toast.error("fields are required please");
@@ -63,13 +63,13 @@ const LoginForm = () => {
                 <div className="section-block"></div>
                 <form method="post" className="pt-4">
                   <div className="input-box">
-                    <label className="label-text">Email or Username</label>
+                    <label className="label-text">Registration No:</label>
                     <div className="form-group">
                       <input
                         className="form-control form--control"
                         type="text"
-                        name="email"
-                        placeHolder="Email or Username"
+                        name="regno"
+                        placeHolder="Registration No"
                         onChange={handleChange}
                       />
                       <span className="la la-user input-icon"></span>

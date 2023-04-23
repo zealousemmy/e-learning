@@ -1,8 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import download from "downloadjs";
+import {
+  BookMarkACourse,
+  DeleteBookMarkACourse,
+} from "../../features/bookmark/bookmarkSlice";
+import {
+  ChangeEditState,
+  DeleteCourseDetails,
+  EditThisCourse,
+  bookmarkCourse,
+  modalCheck,
+} from "../../features/courses/courseSlice";
 
 const StudentCourses = () => {
+  const dispatch = useDispatch();
   const { mycourses } = useSelector((state) => state.course);
+  const { userDetails } = useSelector((state) => state.user);
 
   return (
     <div className="dashboard-cards mb-5 mt-4">
@@ -15,7 +29,13 @@ const StudentCourses = () => {
             <div className="d-block">
               <img
                 class="card-img-top"
-                src="/assets/images/img8.jpg"
+                src={
+                  data?.cover_pic &&
+                  (data?.cover_pic.startsWith("http") ||
+                    data?.cover_pic.startsWith("/"))
+                    ? `${data?.cover_pic}`
+                    : "/assets/images/img8.jpg"
+                }
                 alt="Card image cap"
               />
             </div>
@@ -27,7 +47,7 @@ const StudentCourses = () => {
               <p>{data?.course_bio}</p>
             </div>
             <div class="card-text">
-              <p>{data?.lectural}</p>
+              <p>{data?.fullname}</p>
             </div>
 
             <div
@@ -45,37 +65,74 @@ const StudentCourses = () => {
                 {data?.course}
               </p>
               <div className="card-action-wrap pl-3">
-                <a
-                  href="course-details.html"
-                  className="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-success"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  data-title="View"
-                >
-                  <i class="la la-eye"></i>
-                </a>
-                <div
-                  className="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-secondary"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  data-title="Edit"
-                >
-                  <i class="la la-edit"></i>
-                </div>
-                <div
-                  class="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-danger"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Delete"
-                >
-                  <span
-                    data-toggle="modal"
-                    data-target="#itemDeleteModal"
-                    className="w-100 h-100 d-inline-block"
-                  >
-                    <i class="la la-trash"></i>
-                  </span>
-                </div>
+                {userDetails.bioType !== "lectural" ? (
+                  <>
+                    <a
+                      href={`${data.coursefile}`}
+                      className="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-success"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-title="View"
+                    >
+                      <i class="la la-download"></i>
+                    </a>
+
+                    <div
+                      onClick={() => {
+                        if (data?.bookmark === true) {
+                          dispatch(
+                            bookmarkCourse({ ...data, bookmark: false })
+                          );
+                          dispatch(DeleteBookMarkACourse(data));
+                          return;
+                        }
+                        dispatch(bookmarkCourse({ ...data, bookmark: true }));
+                        dispatch(BookMarkACourse(data));
+                      }}
+                      className="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-secondary"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-title="Edit"
+                    >
+                      {data?.bookmark ? (
+                        <i class="la la-heart"></i>
+                      ) : (
+                        <i class="la la-heart-o"></i>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      onClick={() => {
+                        dispatch(ChangeEditState(true));
+                        dispatch(EditThisCourse(data));
+                        dispatch(modalCheck(true));
+                      }}
+                      className="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-secondary"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-title="Edit"
+                    >
+                      <i class="la la-edit"></i>
+                    </div>
+                    <div
+                      onClick={() => dispatch(DeleteCourseDetails(data))}
+                      class="icon-element icon-element-sm shadow-sm cursor-pointer ml-1 text-danger"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Delete"
+                    >
+                      <span
+                        data-toggle="modal"
+                        data-target="#itemDeleteModal"
+                        className="w-100 h-100 d-inline-block"
+                      >
+                        <i class="la la-trash"></i>
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

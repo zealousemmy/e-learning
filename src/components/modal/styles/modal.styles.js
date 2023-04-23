@@ -4,6 +4,7 @@ export const ModalDiv = styled.div`
   z-index: 500000;
   display: ${({ open }) => (open ? "block" : "none")};
   padding-top: 50px;
+  padding-bottom: 30px;
   position: fixed;
   left: 0;
   top: 0;
