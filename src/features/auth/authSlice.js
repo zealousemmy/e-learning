@@ -7,6 +7,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  tokenDetail: JSON.parse(localStorage.getItem("token")) || "",
 };
 
 // register student
@@ -15,7 +16,7 @@ export const register = createAsyncThunk(
   async (student, thunkAPI) => {
     try {
       let checkValidity = await authService.registerStudent(student);
-      console.log(checkValidity);
+
       return await authService.registerStudent(student);
     } catch (err) {
       console.log(err);
@@ -29,11 +30,24 @@ export const login = createAsyncThunk(
   async (student, thunkAPI) => {
     try {
       const data = await authService.loginStudent(student);
-      console.log(data, "resent work");
 
       return data;
     } catch (err) {
       console.log(err, "from error");
+      return err;
+    }
+  }
+);
+
+export const registerLectural = createAsyncThunk(
+  "auth/registerlectural",
+  async (student, thunkAPI) => {
+    try {
+      // let checkValidity = await authService.registerStudent(student);
+
+      return await authService.registerStudent(student);
+    } catch (err) {
+      console.log(err);
       return err;
     }
   }
@@ -48,6 +62,10 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
+    },
+
+    getTokenDetail: (state, action) => {
+      state.tokenDetail = action.payload;
     },
   },
 
@@ -81,8 +99,7 @@ export const authSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload;
-      console.log(state.user, "this is the user's login slice");
+      state.tokenDetail = action.payload;
     },
 
     [login.rejected]: (state, action) => {
@@ -92,8 +109,23 @@ export const authSlice = createSlice({
       state.user = null;
       console.log(state.message, "rejected");
     },
+
+    [registerLectural.pending]: (state, action) => {
+      state.isLoading = true;
+      // console.log(action.payload, "pending");
+    },
+
+    [registerLectural.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+
+    [registerLectural.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, getTokenDetail } = authSlice.actions;
 export default authSlice.reducer;

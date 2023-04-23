@@ -1,4 +1,10 @@
-import { NavLink, Route, Routes } from "react-router-dom";
+import {
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Home from "./components/pages";
 import Login from "./components/pages/login";
@@ -17,10 +23,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Setting from "./dashboard/pages/setting";
 
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "./features/user/userSlice";
 import CreateLecturer from "./dashboard/pages/create-lecturer";
 import Logout from "./dashboard/pages/logout";
+import ModalComponent from "./components/modal/modalComponent";
+import AddCourse from "./components/addCourse/addCourse";
+
 // import io from "socket.io-client";
 // import SidebarComp from "components/sidebar/SidebarComp";
 
@@ -28,10 +37,15 @@ import Logout from "./dashboard/pages/logout";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { tokenDetail } = useSelector((state) => state?.auth);
+  const { checkmodal } = useSelector((state) => state.course);
 
   useEffect(() => {
-    dispatch(GetUser());
-  }, []);
+    if (tokenDetail) {
+      dispatch(GetUser());
+    }
+  }, [tokenDetail]);
 
   return (
     <>
@@ -50,6 +64,10 @@ function App() {
           <Route path="logout" exact element={<Logout />} />
         </Route>
       </Routes>
+
+      <ModalComponent open={checkmodal}>
+        <AddCourse />
+      </ModalComponent>
       <ToastContainer />
     </>
   );

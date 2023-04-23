@@ -14,7 +14,19 @@ export const GetRooms = createAsyncThunk(
   "message/room",
   async (course, thunkAPI) => {
     try {
-      const data = await messageService.getRoom();
+      const data = await messageService.getRoom(course);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const GetLecturalsRooms = createAsyncThunk(
+  "message/lectural",
+  async (course, thunkAPI) => {
+    try {
+      const data = await messageService.getLecturalRoom(course);
       return data;
     } catch (err) {
       console.log(err);
@@ -51,23 +63,22 @@ export const messageSlice = createSlice({
       state.message = action.payload;
     },
 
-    // [uploadFile.pending]: (state, action) => {
-    //   state.isLoading = true;
-    //   // console.log(action.payload, "pending");
-    // },
+    [GetLecturalsRooms.pending]: (state, action) => {
+      state.isLoading = true;
+      // console.log(action.payload, "pending");
+    },
 
-    // [uploadFile.fulfilled]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.isSuccess = true;
-    //   state.fileDetails = action.payload;
-    // },
+    [GetLecturalsRooms.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.rooms = action.payload;
+    },
 
-    // [uploadFile.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.isError = true;
-    //   state.message = action.payload;
-    //   state.fileDetails = {};
-    // },
+    [GetLecturalsRooms.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+    },
   },
 });
 

@@ -1,6 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register, registerLectural } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const CreateLecturerComp = () => {
+  const dispatch = useDispatch();
+  const [registration, setRegistration] = useState({});
+
+  const handleRegistration = (e) => {
+    const { name, value } = e.target;
+
+    setRegistration({ ...registration, [name]: value });
+  };
+
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    if (registration?.password.length >= 6) {
+      if (registration?.password === registration.confirmpassword) {
+        if (Object.keys(registration).length > 7) {
+          if (registration.admin) {
+            await dispatch(
+              registerLectural({ ...registration, bioType: "lectural" })
+            );
+            setRegistration({});
+          } else {
+            delete registration.admin;
+            await dispatch(
+              registerLectural({ ...registration, bioType: "lectural" })
+            );
+            setRegistration({});
+          }
+        } else {
+          toast("All field must be filled");
+        }
+      } else {
+        toast("password must equal confirmpassword");
+      }
+    } else {
+      toast("password must be greater than or equal 6 characters");
+    }
+  };
+
   return (
     <div className="">
       <div
@@ -11,64 +51,35 @@ const CreateLecturerComp = () => {
       >
         <div className="setting-body">
           <h3 className="fs-17 font-weight-semi-bold pb-4">Create Lecturer</h3>
-          <div className="media media-card align-items-center">
-            <div className="media-img media-img-lg mr-4 bg-gray">
-              <img class="mr-3" src="images/team11.jpg" alt="avatar image" />
-            </div>
-            <div className="media-body">
-              <div className="file-upload-wrap file-upload-wrap-2">
-                <input
-                  type="file"
-                  name="files[]"
-                  class="multi file-upload-input with-preview"
-                  multiple
-                />
-                <span className="file-upload-text">
-                  <i class="la la-photo mr-2"></i>Upload a Photo
-                </span>
-              </div>
-              {/* <!-- file-upload-wrap --> */}
-              <p class="fs-14">
-                Max file size is 5MB, Minimum dimension: 200x200 And Suitable
-                files are .jpg & .png
-              </p>
-            </div>
-          </div>
+
           {/* <!-- end media --> */}
           <form method="post" className="row pt-40px">
             <div className="input-box col-lg-6">
-              <label className="label-text">Name</label>
+              <label className="label-text">Full Name</label>
               <div className="form-group">
                 <input
                   class="form-control form--control"
                   type="text"
-                  name="text"
+                  name="fullname"
+                  value={registration?.fullname || ""}
                   placeholder="Alex"
+                  onChange={handleRegistration}
                 />
                 <span className="la la-user input-icon"></span>
               </div>
             </div>
             {/* <!-- end input-box --> */}
-            {/* <div className="input-box col-lg-6">
-              <label className="label-text">Last Name</label>
-              <div className="form-group">
-                <input
-                  class="form-control form--control"
-                  type="text"
-                  name="text"
-                  placeholder="Smith"
-                />
-                <span className="la la-user input-icon"></span>
-              </div>
-            </div> */}
+
             <div className="input-box col-lg-6">
               <label className="label-text">Faculty</label>
               <div className="form-group">
                 <input
                   class="form-control form--control"
                   type="text"
-                  name="text"
+                  name="faculty"
+                  value={registration?.faculty || ""}
                   placeholder="Applied Science"
+                  onChange={handleRegistration}
                 />
                 {/* <span className="la la-user input-icon"></span> */}
               </div>
@@ -81,8 +92,10 @@ const CreateLecturerComp = () => {
                 <input
                   class="form-control form--control"
                   type="text"
-                  name="text"
+                  name="department"
+                  value={registration?.department || ""}
                   placeholder="Software Engineering"
+                  onChange={handleRegistration}
                 />
                 {/* <span className="la la-user input-icon"></span> */}
               </div>
@@ -95,7 +108,9 @@ const CreateLecturerComp = () => {
                   class="form-control form--control"
                   type="email"
                   name="email"
+                  value={registration?.email || ""}
                   placeholder="alexsmith@gmail.com"
+                  onChange={handleRegistration}
                 />
                 <span className="la la-envelope input-icon"></span>
               </div>
@@ -107,30 +122,80 @@ const CreateLecturerComp = () => {
                 <input
                   class="form-control form--control"
                   type="text"
-                  name="text"
+                  name="phone"
+                  value={registration?.phone || ""}
                   placeholder="(91) 7547 622250"
+                  onChange={handleRegistration}
                 />
                 <span className="la la-phone input-icon"></span>
               </div>
             </div>
             {/* <!-- end input-box --> */}
 
-            {/* <!-- end input-box --> */}
             <div className="input-box col-lg-6">
-              <label className="label-text">Level</label>
+              <label className="label-text">admin</label>
               <div className="form-group">
                 <input
                   class="form-control form--control"
                   type="text"
-                  name="text"
-                  placeholder="200"
+                  name="admin"
+                  value={registration?.admin || ""}
+                  placeholder="admin"
+                  onChange={handleRegistration}
                 />
                 {/* <span className="la la-phone input-icon"></span> */}
               </div>
             </div>
             {/* <!-- end input-box --> */}
+            <div className="input-box col-lg-6">
+              <label className="label-text">Staff Id</label>
+              <div className="form-group">
+                <input
+                  class="form-control form--control"
+                  type="text"
+                  name="regno"
+                  value={registration?.regno || ""}
+                  placeholder="Staff id"
+                  onChange={handleRegistration}
+                />
+                {/* <span className="la la-phone input-icon"></span> */}
+              </div>
+            </div>
+
+            <div className="input-box col-lg-6">
+              <label className="label-text">Password</label>
+              <div className="form-group">
+                <input
+                  class="form-control form--control"
+                  type="text"
+                  name="password"
+                  value={registration?.password || ""}
+                  placeholder="password"
+                  onChange={handleRegistration}
+                />
+                {/* <span className="la la-phone input-icon"></span> */}
+              </div>
+            </div>
+
+            <div className="input-box col-lg-6">
+              <label className="label-text">confirm Password</label>
+              <div className="form-group">
+                <input
+                  class="form-control form--control"
+                  type="text"
+                  name="confirmpassword"
+                  value={registration?.confirmpassword || ""}
+                  placeholder="confirmpassword"
+                  onChange={handleRegistration}
+                />
+                {/* <span className="la la-phone input-icon"></span> */}
+              </div>
+            </div>
+
             <div className="input-box col-lg-12 py-2">
-              <button className="btn theme-btn">Save Changes</button>
+              <button className="btn theme-btn" onClick={HandleSubmit}>
+                Save Changes
+              </button>
             </div>
             {/* <!-- end input-box --> */}
           </form>
