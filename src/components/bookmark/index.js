@@ -1,20 +1,21 @@
+import { useSelector } from "react-redux";
 import { courses } from "../../data/courses";
 import TopImageTextCard from "../card/bookmarkcard";
 
 const BookMarkCard = () => {
-  const getSavedCourse = courses.filter((item) =>
-    item.saveCourse === true ? item : console.log("none")
-  );
-  console.log(getSavedCourse);
+  const { mybookmark } = useSelector((state) => state.bookmark);
+
   return (
     <div className="row">
-      {getSavedCourse.map((course) => (
+      {mybookmark.map((course) => (
         <TopImageTextCard
-          banner={course.banner}
-          title={course.title}
+          banner={course.cover_pic}
+          title={course.course_bio}
           level={course.level}
-          tutor={course.tutor}
-          rating={course.rating}
+          tutor={course.fullname}
+          course={course.course}
+          coursefile={course.coursefile}
+          all={course}
         />
       ))}
 

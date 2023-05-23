@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const AddCourseDiv = styled.div`
   background-color: #fff;
   width: 50%;
+  margin-bottom: 50px;
   border-radius: 8px;
   align-items: center;
   position: relative;

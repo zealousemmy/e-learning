@@ -22,6 +22,18 @@ export const GetUser = createAsyncThunk(
   }
 );
 
+export const EditUser = createAsyncThunk(
+  "modify/edit",
+  async (course, thunkAPI) => {
+    try {
+      const data = await userService.editUser(course);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const messageSlice = createSlice({
   name: "user",
   initialState,
@@ -51,23 +63,22 @@ export const messageSlice = createSlice({
       state.message = action.payload;
     },
 
-    // [uploadFile.pending]: (state, action) => {
-    //   state.isLoading = true;
-    //   // console.log(action.payload, "pending");
-    // },
+    [EditUser.pending]: (state, action) => {
+      state.isLoading = true;
+    },
 
-    // [uploadFile.fulfilled]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.isSuccess = true;
-    //   state.fileDetails = action.payload;
-    // },
+    [EditUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.userDetails = action.payload;
+    },
 
-    // [uploadFile.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.isError = true;
-    //   state.message = action.payload;
-    //   state.fileDetails = {};
-    // },
+    [EditUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.fileDetails = {};
+    },
   },
 });
 
