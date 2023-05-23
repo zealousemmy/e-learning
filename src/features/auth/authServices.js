@@ -7,6 +7,7 @@ const registerStudent = async (studentData) => {
   if (response) {
     // localStorage.setItem("e-learning", JSON.stringify(response.data));
     console.log(response.data);
+    return response.data;
   }
 };
 
@@ -20,6 +21,7 @@ const loginStudent = async (studentData) => {
         JSON.stringify(response?.data?.data?.token)
       );
       console.log(response?.data?.data?.token, "login service returned");
+      return response.data?.data;
     }
   }
 };

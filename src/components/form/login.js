@@ -15,7 +15,7 @@ const LoginForm = () => {
       toast.error(message);
     }
     if (isSuccess) {
-      console.log("isSuccess");
+      console.log("isSuccess true");
       navigate("/dashboard");
     }
   }, [isError, isSuccess]);
