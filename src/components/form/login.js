@@ -75,6 +75,7 @@ const LoginForm = () => {
                     </div>
                   </div>
                   {/* <!-- end input-box --> */}
+                  {/* <!-- end input-box --> */} {/* <!-- end input-box --> */}
                   <div className="input-box">
                     <label className="label-text">Password</label>
                     <div className="input-group mb-3">
