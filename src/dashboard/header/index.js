@@ -59,6 +59,7 @@ const Header = ({ handleClick, handleCloseMenu }) => {
                 </form>
                 {/* <!-- end nav-right-button --> */}
               </div>
+
               {/* <!-- end menu-wrapper --> */}
             </div>
             {/* <!-- end col-lg-10 --> */}

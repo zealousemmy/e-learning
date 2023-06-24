@@ -15,7 +15,6 @@ const LoginForm = () => {
       toast.error(message);
     }
     if (isSuccess) {
-      console.log("isSuccess");
       navigate("/dashboard");
     }
   }, [isError, isSuccess]);
@@ -35,13 +34,13 @@ const LoginForm = () => {
     }));
   };
 
-  console.log(formData);
   const handleLogin = async (e) => {
     e.preventDefault();
     const check = await loginValidationSchema.isValid(formData);
 
     if (check === true) {
       const studentData = { regno, password };
+
       dispatch(login(studentData));
     } else {
       toast.error("fields are required please");
@@ -139,9 +138,9 @@ const LoginForm = () => {
                         </label>
                       </div>
                       {/* <!-- end custom-control --> */}
-                      <a href="recover.html" className="btn-text">
+                      {/* <a href="recover.html" className="btn-text">
                         Forgot my password?
-                      </a>
+                      </a> */}
                     </div>
                     <button
                       class="btn theme-btn"
