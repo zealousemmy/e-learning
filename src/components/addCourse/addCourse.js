@@ -27,6 +27,8 @@ const AddCourse = () => {
   const { fileDetails, fileCover, editThisCourse, changeEditState } =
     useSelector((state) => state.course);
 
+  const { userDetails } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (editThisCourse) {
       setCourse({ ...editThisCourse });
@@ -51,6 +53,7 @@ const AddCourse = () => {
       if (Object.keys(course).length > 5) {
         const payload = {
           ...course,
+          regno: userDetails?.regno,
           coursefile: fileDetails?.Location,
           coursefile_id: fileDetails?.VersionId,
           cover_pic: fileCover?.secure_url,
@@ -79,6 +82,7 @@ const AddCourse = () => {
     await dispatch(
       EditCourseDetails({
         ...course,
+        regno: userDetails?.regno,
         coursefile: fileDetails?.Location
           ? fileDetails?.Location
           : course?.coursefile,

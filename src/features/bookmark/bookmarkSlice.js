@@ -13,7 +13,6 @@ const initialState = {
 export const BookMarkACourse = createAsyncThunk(
   "bookmark/create",
   async (course, thunkAPI) => {
-    console.log(course);
     try {
       return await bookmarkService.BookMarkCourse(course);
     } catch (err) {

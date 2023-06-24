@@ -23,7 +23,6 @@ const SignupForm = () => {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-      console.log(isError, "from error");
     }
     if (isSuccess) {
       toast.success("registration successfully");
@@ -40,12 +39,10 @@ const SignupForm = () => {
     }));
   };
 
-  // console.log(formData);
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log(signupValidationSchema.validate(formData), "section");
+
     const check = await signupValidationSchema.isValid(formData);
-    console.log(check, "next");
 
     if (check === true) {
       const studentData = {
