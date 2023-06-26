@@ -32,6 +32,7 @@ import AddCourse from "./components/addCourse/addCourse";
 import CheckcourseAndAssignment from "./dashboard/pages/checkcourseAndAssignment";
 import AddAssignment from "./components/AddAssignment/addAssignment";
 import AddStudentAssignment from "./components/AddStudentAssignment/addStudentAssignment";
+import CreateBotQuestion from "./dashboard/pages/createBotQuestion";
 
 // import io from "socket.io-client";
 // import SidebarComp from "components/sidebar/SidebarComp";
@@ -66,6 +67,8 @@ function App() {
           <Route path="messages" exact element={<Message />} />
           <Route path="settings" exact element={<Setting />} />
           <Route path="create-lecturer" exact element={<CreateLecturer />} />
+          <Route path="create-bot" exact element={<CreateBotQuestion />} />
+
           <Route
             path="courseAndassginment/:course"
             exact
