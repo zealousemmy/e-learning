@@ -35,58 +35,62 @@ const ChatComponet = () => {
 
   return (
     <ChartDiv>
-      <div className="header">
-        <div className="input-body">
-          <p>Create Question</p>
+      {userDetails?.bioType === "lectural" && (
+        <div className="header">
+          <div className="input-body">
+            <p>Create Question</p>
 
-          <input
-            type="text"
-            value={formValue?.question || ""}
-            name="question"
-            onChange={handleChage}
-          />
+            <input
+              type="text"
+              value={formValue?.question || ""}
+              name="question"
+              onChange={handleChage}
+            />
+          </div>
+
+          <div className="textArea">
+            <p>Create Answer</p>
+
+            <textarea
+              name="reply"
+              value={formValue?.reply || ""}
+              onChange={handleChage}
+            ></textarea>
+          </div>
+
+          <div className="headet_button">
+            {isLoading ? (
+              <button>
+                <SpinnerNormal />
+              </button>
+            ) : (
+              <button onClick={HandleCreate}>Submit Course</button>
+            )}
+          </div>
         </div>
+      )}
 
-        <div className="textArea">
-          <p>Create Answer</p>
-
-          <textarea
-            name="reply"
-            value={formValue?.reply || ""}
-            onChange={handleChage}
-          ></textarea>
+      {userDetails?.bioType === "lectural" && (
+        <div>
+          <div className="tabWrapper">
+            {tabContent?.map((item, key) => (
+              <div
+                key={key}
+                onClick={() => {
+                  if (item.title === "My Bot") {
+                    setTitle(item.title);
+                  } else {
+                    setTitle(item.title);
+                  }
+                }}
+                className={`tab1 ${item.title === title && "tabSuccess"}`}
+              >
+                <p>{item.title}</p>
+              </div>
+            ))}
+          </div>
         </div>
-
-        <div className="headet_button">
-          {isLoading ? (
-            <button>
-              <SpinnerNormal />
-            </button>
-          ) : (
-            <button onClick={HandleCreate}>Submit Course</button>
-          )}
-        </div>
-      </div>
-
-      <div>
-        <div className="tabWrapper">
-          {tabContent?.map((item, key) => (
-            <div
-              key={key}
-              onClick={() => {
-                if (item.title === "My Bot") {
-                  setTitle(item.title);
-                } else {
-                  setTitle(item.title);
-                }
-              }}
-              className={`tab1 ${item.title === title && "tabSuccess"}`}
-            >
-              <p>{item.title}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
 
       <div className="table">
         <div className="tableSection__header">
@@ -98,57 +102,111 @@ const ChatComponet = () => {
             <p>email</p>
           </div>
 
-          <div className="tableSection__headerSection Time">
+          <div
+            className="tableSection__headerSection Time"
+            style={{ width: "25%" }}
+          >
             <p>question</p>
           </div>
 
-          <div className="tableSection__headerSection Time">
-            <p>Reply</p>
-          </div>
+          {userDetails?.bioType === "lectural" && (
+            <div
+              className="tableSection__headerSection Time"
+              style={{ width: "35%" }}
+            >
+              <p>Reply</p>
+            </div>
+          )}
 
-          {title === "My Bot" && (
+          {userDetails?.bioType === "lectural" && title === "My Bot" && (
             <div className="tableSection__headerSection Action">
               <p>Action</p>
             </div>
           )}
         </div>
 
-        {myBot && title === "My Bot"
-          ? myBot.map((item, key) => (
-              <div className="tableSection__body" key={key}>
-                <div
-                  className="tableSection__bodySection Time"
-                  style={{ cursor: "pointer" }}
-                  // onClick={() => {
-                  //   dispatch({type: USER_PROFILE_LOADER, payload: true});
-                  //   history.push(`/app/profile/${item?.userID}`);
-                  // }}
-                >
-                  <p>{item?.fullname}</p>
-                </div>
+        {userDetails?.bioType === "lectural"
+          ? myBot && title === "My Bot"
+            ? myBot.map((item, key) => (
+                <div className="tableSection__body" key={key}>
+                  <div
+                    className="tableSection__bodySection Time"
+                    style={{ cursor: "pointer" }}
+                    // onClick={() => {
+                    //   dispatch({type: USER_PROFILE_LOADER, payload: true});
+                    //   history.push(`/app/profile/${item?.userID}`);
+                    // }}
+                  >
+                    <p>{item?.fullname}</p>
+                  </div>
 
-                <div className="tableSection__bodySection Type">
-                  <p>{item?.email}</p>
-                </div>
+                  <div className="tableSection__bodySection Type">
+                    <p>{item?.email}</p>
+                  </div>
 
-                <div className="tableSection__bodySection Type">
-                  <p>{item?.question}</p>
-                </div>
+                  <div
+                    className="tableSection__bodySection Type"
+                    style={{ width: "25%" }}
+                  >
+                    <p>{item?.question}</p>
+                  </div>
 
-                <div className="tableSection__bodySection Type">
-                  <p>{item?.reply}</p>
-                </div>
+                  <div
+                    className="tableSection__bodySection Type"
+                    style={{ width: "35%" }}
+                  >
+                    <p>{item?.reply}</p>
+                  </div>
 
-                <div
+                  <div
+                    className="tableSection__bodySection Action"
+                    onClick={() => {
+                      dispatch(DeteleBot(item?._id));
+                    }}
+                  >
+                    <p>Delete Bot</p>
+                  </div>
+                </div>
+              ))
+            : allBot.map((item, key) => (
+                <div className="tableSection__body" key={key}>
+                  <div
+                    className="tableSection__bodySection Time"
+                    style={{ cursor: "pointer" }}
+                    // onClick={() => {
+                    //   dispatch({type: USER_PROFILE_LOADER, payload: true});
+                    //   history.push(`/app/profile/${item?.userID}`);
+                    // }}
+                  >
+                    <p>{item?.fullname}</p>
+                  </div>
+
+                  <div className="tableSection__bodySection Type">
+                    <p>{item?.email}</p>
+                  </div>
+
+                  <div
+                    className="tableSection__bodySection Type"
+                    style={{ width: "25%" }}
+                  >
+                    <p>{item?.question}</p>
+                  </div>
+
+                  <div
+                    className="tableSection__bodySection Type"
+                    style={{ width: "35%" }}
+                  >
+                    <p>{item?.reply}</p>
+                  </div>
+
+                  {/* <div
                   className="tableSection__bodySection Action"
-                  onClick={() => {
-                    dispatch(DeteleBot(item?._id));
-                  }}
+                  onClick={() => {}}
                 >
                   <p>Delete Bot</p>
+                </div> */}
                 </div>
-              </div>
-            ))
+              ))
           : allBot.map((item, key) => (
               <div className="tableSection__body" key={key}>
                 <div
@@ -166,13 +224,19 @@ const ChatComponet = () => {
                   <p>{item?.email}</p>
                 </div>
 
-                <div className="tableSection__bodySection Type">
+                <div
+                  className="tableSection__bodySection Type"
+                  style={{ width: "25%" }}
+                >
                   <p>{item?.question}</p>
                 </div>
 
-                <div className="tableSection__bodySection Type">
+                {/* <div
+                  className="tableSection__bodySection Type"
+                  style={{ width: "35%" }}
+                >
                   <p>{item?.reply}</p>
-                </div>
+                </div> */}
 
                 {/* <div
                   className="tableSection__bodySection Action"
