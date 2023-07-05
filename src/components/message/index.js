@@ -55,13 +55,8 @@ const MessageIndex = () => {
   }, [userDetails]);
 
   const joinRoom = (room) => {
-    if (room === "bot") {
-      socket.emit("join-room", "bot");
-      setCurrentRoom({ course: room });
-    } else {
-      socket.emit("join-room", room.course);
-      setCurrentRoom(room);
-    }
+    socket.emit("join-room", room.course);
+    setCurrentRoom(room);
   };
 
   const getFormattedDate = async () => {
@@ -109,7 +104,8 @@ const MessageIndex = () => {
       message,
       userDetails,
       time,
-      todayDate
+      todayDate,
+      currentRoom?.notice
     );
 
     setMessage("");
@@ -137,40 +133,6 @@ const MessageIndex = () => {
               </form>
               <div className="message-inbox-item border-bottom border-bottom-gray">
                 <div className="notification-body scrolled-box scrolled--box custom-scrollbar-styled">
-                  <a
-                    className="media media-card align-items-center"
-                    onClick={() => {
-                      joinRoom("bot");
-                    }}
-                    style={{
-                      backgroundColor: `${
-                        currentRoom === "bot" ? "#f3f3f3" : ""
-                      }`,
-                    }}
-                  >
-                    <div className="avatar-sm flex-shrink-0 mr-2 position-relative">
-                      <img
-                        class="rounded-full img-fluid"
-                        src={"/assets/img/avatar-profile-photo.png"}
-                        alt="Avatar image"
-                      />
-                      {/* <span className="dot-status position-absolute bottom-0 right-0"></span> */}
-                    </div>
-                    <div className="media-body overflow-hidden">
-                      <h5 className="fs-14">
-                        Bot
-                        <span class="badge badge-success p-1 ml-2">2</span>
-                      </h5>
-                      <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                        How the hell am I supposed to get a jury to believe you
-                        when I am not even sure that I do
-                      </p>
-                      <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                        5 min ago
-                      </span>
-                    </div>
-                  </a>
-
                   {rooms?.map((item, key) => (
                     <a
                       key={key}
