@@ -28,7 +28,9 @@ const CreateBotQuestion = () => {
       <TopProfileCard />
 
       <div class="dashboard-heading mb-5">
-        <h3 class="fs-22 font-weight-semi-bold">Chat bot</h3>
+        <h3 class="fs-22 font-weight-semi-bold">
+          {userDetails?.bioType === "lectural" ? "Chat bot" : "LCU AI"}
+        </h3>
       </div>
 
       {loader ? (
