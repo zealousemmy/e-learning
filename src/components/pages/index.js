@@ -13,6 +13,7 @@ const Home = () => {
     setLeft(0);
   };
   const isAuthenticated = localStorage.getItem("token");
+
   return (
     <>
       {isAuthenticated ? (

@@ -3,6 +3,7 @@ import Card from ".";
 import data from "../../data/data.json";
 import lectural from "../../data/lectural.json";
 import { useSelector } from "react-redux";
+
 const CoursesCards = () => {
   const { mycoursescount, generalcoursecount, facultycoursecount } =
     useSelector((state) => state.course);
