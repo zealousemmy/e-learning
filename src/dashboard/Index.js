@@ -12,6 +12,7 @@ const Dashboard = (props) => {
   const handleCloseSideBar = () => {
     setLeft(0);
   };
+
   return (
     <div>
       <Header
