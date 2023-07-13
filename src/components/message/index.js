@@ -163,14 +163,15 @@ const MessageIndex = () => {
                       <div className="media-body overflow-hidden">
                         <h5 className="fs-14">
                           {item.course}
-                          <span class="badge badge-success p-1 ml-2">2</span>
+                          {/* <span class="badge badge-success p-1 ml-2">2</span> */}
                         </h5>
                         <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                          How the hell am I supposed to get a jury to believe
-                          you when I am not even sure that I do
+                          {messages[-1]?.messagesByDate[-1]
+                            ? messages[-1]?.messagesByDate[-1]?.content
+                            : ""}
                         </p>
                         <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                          5 min ago
+                          {moment(messages[-1]?._id).format("mm")}
                         </span>
                       </div>
                     </a>
