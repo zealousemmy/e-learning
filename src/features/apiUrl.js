@@ -25,6 +25,7 @@ APIs.interceptors.response.use(
     return res;
   },
   (err) => {
+    console.log(err, "never say never");
     throw err.response.data?.message;
   }
 );

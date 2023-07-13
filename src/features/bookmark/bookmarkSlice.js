@@ -16,7 +16,7 @@ export const BookMarkACourse = createAsyncThunk(
     try {
       return await bookmarkService.BookMarkCourse(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -27,7 +27,7 @@ export const DeleteBookMarkACourse = createAsyncThunk(
     try {
       return await bookmarkService.DeleteBookMarkCourse(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -38,7 +38,7 @@ export const GetBookMarkACourse = createAsyncThunk(
     try {
       return await bookmarkService.GetBookMarkCourse();
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );

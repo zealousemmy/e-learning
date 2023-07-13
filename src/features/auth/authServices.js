@@ -7,7 +7,13 @@ const registerStudent = async (studentData) => {
   const response = await APIs.post(`/api/auth/register`, studentData);
   if (response) {
     console.log(response);
-    return response;
+    try {
+      return response;
+    } catch (err) {
+      toast(err);
+      throw err;
+    }
+
     // toast("Successfull Created");
     // localStorage.setItem("e-learning", JSON.stringify(response.data));
   }
@@ -28,13 +34,9 @@ const loginStudent = async (studentData) => {
         ] = `Bearer ${response?.data?.data?.token}`;
 
         return response?.data?.data?.token;
-      } else {
-        console.log(response, "else response");
-        return response;
       }
     }
   } catch (err) {
-    toast(err);
     throw err;
   }
 };

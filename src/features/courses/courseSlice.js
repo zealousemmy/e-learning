@@ -35,7 +35,7 @@ export const uploadCourse = createAsyncThunk(
     try {
       return await courseService.uploadCourse(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -47,7 +47,7 @@ export const myInstantCourses = createAsyncThunk(
       const data = await courseService.getInstantCourse(course);
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -60,7 +60,7 @@ export const myCourses = createAsyncThunk(
 
       return res;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -77,7 +77,7 @@ export const myCoursesCount = createAsyncThunk(
 
       return constants;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -88,7 +88,7 @@ export const GeneralCoursescount = createAsyncThunk(
     try {
       return await courseService.getGeneralCourses(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -99,7 +99,7 @@ export const FacultyCoursesCount = createAsyncThunk(
     try {
       return await courseService.getFacultyCourses(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -115,7 +115,7 @@ export const LecturalCoursesCount = createAsyncThunk(
 
       return constants;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -126,7 +126,7 @@ export const LecturalCourses = createAsyncThunk(
     try {
       return await courseService.getLecturalCourse(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -137,7 +137,7 @@ export const AllCoursesCount = createAsyncThunk(
     try {
       return await courseService.getAllCourseCount(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -150,7 +150,7 @@ export const uploadFile = createAsyncThunk(
 
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -163,7 +163,7 @@ export const EditCourseDetails = createAsyncThunk(
 
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -176,7 +176,7 @@ export const DeleteCourseDetails = createAsyncThunk(
 
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -189,7 +189,7 @@ export const uploadCover = createAsyncThunk(
 
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -200,7 +200,7 @@ export const GetCourseBookMarkACourse = createAsyncThunk(
     try {
       return await bookmarkService.GetBookMarkCourse();
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
