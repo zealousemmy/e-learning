@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authServices";
+import { toast } from "react-toastify";
 
 const initialState = {
   user: null,
@@ -31,10 +32,11 @@ export const login = createAsyncThunk(
     try {
       const data = await authService.loginStudent(student);
 
+      // toast("successfully login");
       return data;
     } catch (err) {
-      console.log(err, "from error");
-      return err;
+      toast.error(err.message);
+      throw err;
     }
   }
 );
@@ -48,7 +50,7 @@ export const registerLectural = createAsyncThunk(
       return await authService.registerStudent(student);
     } catch (err) {
       console.log(err);
-      return err;
+      throw err;
     }
   }
 );
@@ -77,29 +79,26 @@ export const authSlice = createSlice({
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      console.log(state.isSuccess);
+
       state.user = action.payload;
-      console.log(state.isSuccess, "success");
-      console.log(state.user, "this is the user's page");
     },
 
     [register.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
-      console.log(state.message, "from state message");
       state.user = null;
     },
 
     [login.pending]: (state, action) => {
       state.isLoading = true;
-      // console.log(action.payload, "pending");
     },
 
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.tokenDetail = action.payload;
+      console.log(action, "action payload fulfilled");
     },
 
     [login.rejected]: (state, action) => {
@@ -108,12 +107,11 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload;
       state.user = null;
-      console.log(state.message, "rejected");
+      console.log(action, "rejected login action");
     },
 
     [registerLectural.pending]: (state, action) => {
       state.isLoading = true;
-      // console.log(action.payload, "pending");
     },
 
     [registerLectural.fulfilled]: (state, action) => {

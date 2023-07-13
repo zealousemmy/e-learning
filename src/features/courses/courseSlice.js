@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import courseService from "./courseServices";
 import bookmarkService from "../bookmark/bookmarkService";
+import { LecturalAssignment } from "../assignment/assignmentSlice";
 
 const initialState = {
   isError: false,
@@ -8,6 +9,8 @@ const initialState = {
   isLoading: false,
   message: "",
   checkmodal: false,
+  checkAssignment: false,
+  studentAssignmentchecker: false,
   fileDetails: {},
   mycourses: [],
   fileCover: {},
@@ -20,6 +23,9 @@ const initialState = {
   allcoursecount: 0,
   editThisCourse: {},
   changeEditState: false,
+  transacSwitcher: "Courses",
+  selectcourse: "",
+  instantsCourses: [],
 };
 
 // register student
@@ -34,11 +40,25 @@ export const uploadCourse = createAsyncThunk(
   }
 );
 
+export const myInstantCourses = createAsyncThunk(
+  "course/instanctcourse",
+  async (course, dispatch, thunkAPI) => {
+    try {
+      const data = await courseService.getInstantCourse(course);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const myCourses = createAsyncThunk(
   "course/mycourse",
   async (course, thunkAPI) => {
     try {
-      return await courseService.getCourses(course);
+      const res = await courseService.getCourses(course);
+
+      return res;
     } catch (err) {
       console.log(err);
     }
@@ -193,12 +213,27 @@ export const courseSlice = createSlice({
       state.checkmodal = action.payload;
     },
 
+    AssignmentCheck: (state, action) => {
+      state.checkAssignment = action.payload;
+    },
+
+    StudentAssignmentCheck: (state, action) => {
+      state.studentAssignmentchecker = action.payload;
+    },
     ChangeEditState: (state, action) => {
       state.changeEditState = action.payload;
     },
 
     EditThisCourse: (state, action) => {
       state.editThisCourse = action.payload;
+    },
+
+    TRANSAC_SWITCHER: (state, action) => {
+      state.transacSwitcher = action.payload;
+    },
+
+    SelectCourse: (state, action) => {
+      state.selectcourse = action.payload;
     },
 
     bookmarkCourse: (state, action) => {
@@ -282,6 +317,21 @@ export const courseSlice = createSlice({
       state.message = action.payload;
     },
 
+    [myInstantCourses.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+
+    [myInstantCourses.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.instantsCourses = action.payload;
+    },
+
+    [myInstantCourses.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+    },
+
     [GeneralCoursescount.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -314,7 +364,6 @@ export const courseSlice = createSlice({
 
     [uploadFile.pending]: (state, action) => {
       state.isLoading = true;
-      // console.log(action.payload, "pending");
     },
 
     [uploadFile.fulfilled]: (state, action) => {
@@ -332,7 +381,6 @@ export const courseSlice = createSlice({
 
     [uploadCover.pending]: (state, action) => {
       state.isLoading = true;
-      // console.log(action.payload, "pending");
     },
 
     [uploadCover.fulfilled]: (state, action) => {
@@ -462,5 +510,9 @@ export const {
   bookmarkCourse,
   ChangeEditState,
   EditThisCourse,
+  TRANSAC_SWITCHER,
+  AssignmentCheck,
+  StudentAssignmentCheck,
+  SelectCourse,
 } = courseSlice.actions;
 export default courseSlice.reducer;

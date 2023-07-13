@@ -59,7 +59,7 @@ const MessageIndex = () => {
     setCurrentRoom(room);
   };
 
-  const getFormattedDate = () => {
+  const getFormattedDate = async () => {
     const date = new Date();
 
     const year = date.getFullYear();
@@ -75,8 +75,6 @@ const MessageIndex = () => {
     return month + "/" + day + "/" + year;
   };
 
-  const todayDate = getFormattedDate();
-
   socket.off("room-messages").on("room-messages", (roomMessages) => {
     setMessages(roomMessages);
   });
@@ -86,7 +84,7 @@ const MessageIndex = () => {
     setMessage(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!message) return;
@@ -98,13 +96,16 @@ const MessageIndex = () => {
 
     const time = today.getHours() + ":" + minutes;
 
+    const todayDate = await getFormattedDate();
+
     socket.emit(
       "message-room",
       currentRoom?.course,
       message,
       userDetails,
       time,
-      todayDate
+      todayDate,
+      currentRoom?.notice
     );
 
     setMessage("");

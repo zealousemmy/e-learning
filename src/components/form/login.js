@@ -15,7 +15,6 @@ const LoginForm = () => {
       toast.error(message);
     }
     if (isSuccess) {
-      console.log("isSuccess true");
       navigate("/dashboard");
     }
   }, [isError, isSuccess]);
@@ -35,7 +34,6 @@ const LoginForm = () => {
     }));
   };
 
-  console.log(formData);
   const handleLogin = async (e) => {
     e.preventDefault();
     const check = await loginValidationSchema.isValid(formData);
@@ -76,6 +74,7 @@ const LoginForm = () => {
                     </div>
                   </div>
                   {/* <!-- end input-box --> */}
+                  {/* <!-- end input-box --> */} {/* <!-- end input-box --> */}
                   <div className="input-box">
                     <label className="label-text">Password</label>
                     <div className="input-group mb-3">
@@ -139,9 +138,9 @@ const LoginForm = () => {
                         </label>
                       </div>
                       {/* <!-- end custom-control --> */}
-                      <a href="recover.html" className="btn-text">
+                      {/* <a href="recover.html" className="btn-text">
                         Forgot my password?
-                      </a>
+                      </a> */}
                     </div>
                     <button
                       class="btn theme-btn"

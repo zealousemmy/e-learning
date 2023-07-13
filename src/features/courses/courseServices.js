@@ -113,6 +113,22 @@ const getAllCourseCount = async (arg) => {
   }
 };
 
+const getInstantCourse = async (arg) => {
+  try {
+    const response = await APIs.get(
+      `/api/upload_course/get_selected_course_by/${arg}`
+    );
+
+    if (response) {
+      if (response?.data?.message === "success") {
+        return response?.data?.data;
+      }
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
 const getLecturalCourseCount = async (arg) => {
   try {
     const response = await APIs.get(
@@ -182,6 +198,7 @@ const courseService = {
   getLecturalCourseCount,
   EditCourse,
   DeleteCourse,
+  getInstantCourse,
 };
 
 export default courseService;

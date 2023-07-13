@@ -3,7 +3,11 @@ import React from "react";
 import AddCourse from "../addCourse/addCourse";
 import ModalComponent from "../modal/modalComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { modalCheck } from "../../features/courses/courseSlice";
+import {
+  AssignmentCheck,
+  StudentAssignmentCheck,
+  modalCheck,
+} from "../../features/courses/courseSlice";
 
 const TopProfileCard = () => {
   const dispatch = useDispatch();
@@ -42,6 +46,48 @@ const TopProfileCard = () => {
         </div>
         {/*  <!-- end media --> */}
         {userDetails?.bioType === "lectural" && (
+          <>
+            <div
+              className="file-upload-wrap file-upload-wrap-2 file--upload-wrap"
+              // style={{ border: "1px solid red" }}
+            >
+              <span
+                style={{
+                  border: "1px solid #F2F3F4",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  dispatch(modalCheck(true));
+                }}
+              >
+                <i class="la la-upload mr-2"></i>Upload a course
+              </span>
+            </div>
+
+            <div
+              className="file-upload-wrap file-upload-wrap-2 file--upload-wrap"
+              // style={{ border: "1px solid red" }}
+            >
+              <span
+                style={{
+                  border: "1px solid #F2F3F4",
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  dispatch(AssignmentCheck(true));
+                }}
+              >
+                <i class="la la-upload mr-2"></i>Set Assignment
+              </span>
+            </div>
+          </>
+        )}
+
+        {userDetails?.bioType !== "lectural" && (
           <div
             className="file-upload-wrap file-upload-wrap-2 file--upload-wrap"
             // style={{ border: "1px solid red" }}
@@ -54,10 +100,10 @@ const TopProfileCard = () => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                dispatch(modalCheck(true));
+                dispatch(StudentAssignmentCheck(true));
               }}
             >
-              <i class="la la-upload mr-2"></i>Upload a course
+              <i class="la la-upload mr-2"></i>Upload Assignment
             </span>
           </div>
         )}

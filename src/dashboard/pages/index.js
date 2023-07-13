@@ -5,11 +5,15 @@ import Notification from "../../components/staticsAndNotifications";
 import TopProfileCard from "../../components/topProfileCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  GetCourseBookMarkACourse,
+  LecturalCourses,
   LecturalCoursesCount,
+  myCourses,
   myCoursesCount,
 } from "../../features/courses/courseSlice";
 import SpinnerMain from "../../components/Spinner/Spinner1";
 import APIs from "../../features/apiUrl";
+import NotificationTable from "../../components/notificationTable";
 
 const IndexPage = () => {
   const dispatch = useDispatch();
@@ -30,6 +34,16 @@ const IndexPage = () => {
       })
     );
 
+    await dispatch(GetCourseBookMarkACourse());
+
+    await dispatch(
+      myCourses({
+        level: userDetails?.level,
+        department: userDetails?.department,
+        faculty: userDetails?.faculty,
+      })
+    );
+
     setLoader(false);
   };
 
@@ -42,6 +56,8 @@ const IndexPage = () => {
         fullname: userDetails?.fullname,
       })
     );
+
+    await dispatch(LecturalCourses({ fullname: userDetails?.fullname }));
 
     setLoader(false);
   };
@@ -76,7 +92,7 @@ const IndexPage = () => {
       ) : (
         <>
           <CoursesCards />
-          <Notification />
+          <NotificationTable />
         </>
       )}
     </div>

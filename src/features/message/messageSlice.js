@@ -65,7 +65,6 @@ export const messageSlice = createSlice({
 
     [GetLecturalsRooms.pending]: (state, action) => {
       state.isLoading = true;
-      // console.log(action.payload, "pending");
     },
 
     [GetLecturalsRooms.fulfilled]: (state, action) => {

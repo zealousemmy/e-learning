@@ -29,6 +29,10 @@ import CreateLecturer from "./dashboard/pages/create-lecturer";
 import Logout from "./dashboard/pages/logout";
 import ModalComponent from "./components/modal/modalComponent";
 import AddCourse from "./components/addCourse/addCourse";
+import CheckcourseAndAssignment from "./dashboard/pages/checkcourseAndAssignment";
+import AddAssignment from "./components/AddAssignment/addAssignment";
+import AddStudentAssignment from "./components/AddStudentAssignment/addStudentAssignment";
+import CreateBotQuestion from "./dashboard/pages/createBotQuestion";
 
 // import io from "socket.io-client";
 // import SidebarComp from "components/sidebar/SidebarComp";
@@ -39,7 +43,9 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const { tokenDetail } = useSelector((state) => state?.auth);
-  const { checkmodal } = useSelector((state) => state.course);
+  const { checkmodal, checkAssignment, studentAssignmentchecker } = useSelector(
+    (state) => state.course
+  );
 
   useEffect(() => {
     if (tokenDetail) {
@@ -61,12 +67,27 @@ function App() {
           <Route path="messages" exact element={<Message />} />
           <Route path="settings" exact element={<Setting />} />
           <Route path="create-lecturer" exact element={<CreateLecturer />} />
+          <Route path="create-bot" exact element={<CreateBotQuestion />} />
+
+          <Route
+            path="courseAndassginment/:course"
+            exact
+            element={<CheckcourseAndAssignment />}
+          />
           <Route path="logout" exact element={<Logout />} />
         </Route>
       </Routes>
 
       <ModalComponent open={checkmodal}>
         <AddCourse />
+      </ModalComponent>
+
+      <ModalComponent open={checkAssignment}>
+        <AddAssignment />
+      </ModalComponent>
+
+      <ModalComponent open={studentAssignmentchecker}>
+        <AddStudentAssignment />
       </ModalComponent>
       <ToastContainer />
     </>
