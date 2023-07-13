@@ -17,7 +17,7 @@ export const uploadAssignment = createAsyncThunk(
     try {
       return await assignmentService.uploadAssignment(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -28,7 +28,7 @@ export const LecturalAssignment = createAsyncThunk(
     try {
       return await assignmentService.getLecturalAssignment(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -39,7 +39,7 @@ export const StudentLecturalAssignment = createAsyncThunk(
     try {
       return await assignmentService.getStudentLecturalAssignment(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -50,7 +50,7 @@ export const DeleteAssignment = createAsyncThunk(
     try {
       return await assignmentService.DeleteAssignment(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -61,7 +61,7 @@ export const EditAssignment = createAsyncThunk(
     try {
       return await assignmentService.EditAssignment(course);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );

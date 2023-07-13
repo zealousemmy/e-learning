@@ -17,7 +17,7 @@ export const GetRooms = createAsyncThunk(
       const data = await messageService.getRoom(course);
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
@@ -29,7 +29,7 @@ export const GetLecturalsRooms = createAsyncThunk(
       const data = await messageService.getLecturalRoom(course);
       return data;
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 );
