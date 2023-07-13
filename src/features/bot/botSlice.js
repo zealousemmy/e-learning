@@ -19,6 +19,7 @@ export const CreateBot = createAsyncThunk(
       return await botService.uploadBot(course);
     } catch (err) {
       toast(err.message);
+      throw err;
     }
   }
 );
@@ -30,6 +31,7 @@ export const GetMyBot = createAsyncThunk(
       return await botService.GetBot(course);
     } catch (err) {
       toast(err.message);
+      throw err;
     }
   }
 );
@@ -39,6 +41,7 @@ export const AllBot = createAsyncThunk("bot/allbot", async (thunkAPI) => {
     return await botService.GetAllBot();
   } catch (err) {
     toast(err.message);
+    throw err;
   }
 });
 
@@ -49,6 +52,7 @@ export const DeteleBot = createAsyncThunk(
       return await botService.deteleBot(id);
     } catch (err) {
       toast(err.message);
+      throw err;
     }
   }
 );

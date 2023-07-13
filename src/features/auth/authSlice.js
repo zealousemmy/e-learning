@@ -20,8 +20,7 @@ export const register = createAsyncThunk(
 
       return await authService.registerStudent(student);
     } catch (err) {
-      console.log(err);
-      return err;
+      throw err;
     }
   }
 );
@@ -35,7 +34,8 @@ export const login = createAsyncThunk(
       toast("successfully login");
       return data;
     } catch (err) {
-      return err;
+      toast(err);
+      throw err;
     }
   }
 );
@@ -48,8 +48,7 @@ export const registerLectural = createAsyncThunk(
 
       return await authService.registerStudent(student);
     } catch (err) {
-      console.log(err);
-      return err;
+      throw err;
     }
   }
 );
