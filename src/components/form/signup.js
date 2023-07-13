@@ -14,6 +14,7 @@ const SignupForm = () => {
     faculty: "",
     department: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -22,13 +23,18 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast(message);
+      setLoading(false);
+    }
+    if (isLoading) {
+      setLoading(true);
     }
     if (isSuccess) {
-      toast.success("registration successfully");
+      setLoading(false);
+      toast("registration successfully");
       navigate("/login");
     }
-  }, []);
+  }, [isLoading, isError, isSuccess]);
 
   const { fullname, email, regno, password, faculty, department } = formData;
 
@@ -41,14 +47,15 @@ const SignupForm = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const check = await signupValidationSchema.isValid(formData);
-
     if (check === true) {
       const studentData = {
         ...formData,
       };
+      console.log(studentData);
       dispatch(register(studentData));
+      setLoading(false);
       // navigate("/login");
     } else {
       toast.error("input fields required", {
@@ -60,6 +67,7 @@ const SignupForm = () => {
         draggable: true,
         progress: undefined,
       });
+      setLoading(false);
     }
   };
   const isAuthenticated = localStorage.getItem("token");
@@ -243,57 +251,12 @@ const SignupForm = () => {
                   </div>
                   {/* <!-- end input-box --> */}
                   <div className="btn-box">
-                    <div className="custom-control custom-checkbox mb-2 fs-15">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="receiveCheckbox"
-                        required
-                      />
-                      <label
-                        class="custom-control-label custom--control-label lh-20"
-                        htmlFor="receiveCheckbox"
-                      >
-                        Yes! I want to get the most out of Aduca by receiving
-                        emails with exclusive deals, personal recommendations
-                        and learning tips!
-                      </label>
-                    </div>
-                    {/* <!-- end custom-control --> */}
-                    <div className="custom-control custom-checkbox mb-4 fs-15">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="agreeCheckbox"
-                        required
-                      />
-                      <label
-                        class="custom-control-label custom--control-label"
-                        htmlFor="agreeCheckbox"
-                      >
-                        by signing i agree to the
-                        <a
-                          href="terms-and-conditions.html"
-                          className="text-color hover-underline"
-                        >
-                          terms and conditions
-                        </a>{" "}
-                        and
-                        <a
-                          href="privacy-policy.html"
-                          className="text-color hover-underline"
-                        >
-                          privacy policy
-                        </a>
-                      </label>
-                    </div>
-                    {/* <!-- end custom-control --> */}
                     <button
                       className="btn theme-btn"
                       type="submit"
                       onClick={handleSignUp}
                     >
-                      Register Account{" "}
+                      {loading === true ? "loading..." : "Register Account"}
                       <i class="la la-arrow-right icon ml-1"></i>
                     </button>
                     <p className="fs-14 pt-2">

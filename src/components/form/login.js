@@ -40,7 +40,6 @@ const LoginForm = () => {
 
     if (check === true) {
       const studentData = { regno, password };
-
       dispatch(login(studentData));
     } else {
       toast.error("fields are required please");
