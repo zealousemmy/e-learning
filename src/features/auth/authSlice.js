@@ -18,10 +18,9 @@ export const register = createAsyncThunk(
   async (student, thunkAPI) => {
     const navigate = useNavigate();
     try {
-      const data = await authService.registerStudent(student);
-      toast("registration successfully");
-      navigate("/login");
-      return data;
+      let checkValidity = await authService.registerStudent(student);
+
+      return checkValidity;
     } catch (err) {
       toast(err);
       throw err;

@@ -4,18 +4,17 @@ import { toast } from "react-toastify";
 
 // register student
 const registerStudent = async (studentData) => {
-  const response = await APIs.post(`/api/auth/register`, studentData);
-  if (response) {
-    console.log(response);
-    try {
-      return response;
-    } catch (err) {
-      toast(err);
-      throw err;
-    }
+  try {
+    const response = await APIs.post(`/api/auth/register`, studentData);
 
-    // toast("Successfull Created");
-    // localStorage.setItem("e-learning", JSON.stringify(response.data));
+    if (response?.data?.data?.message === "success") {
+      toast("Successfull Created");
+      return response?.data?.data;
+      // localStorage.setItem("e-learning", JSON.stringify(response.data));
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
 };
 
