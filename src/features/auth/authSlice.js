@@ -18,8 +18,9 @@ export const register = createAsyncThunk(
     try {
       let checkValidity = await authService.registerStudent(student);
 
-      return await authService.registerStudent(student);
+      return checkValidity;
     } catch (err) {
+      toast(err);
       throw err;
     }
   }
