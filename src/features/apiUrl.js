@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 // https://e-learning-backend.onrender.com
 const APIs = axios.create({
-  baseURL: "http://localhost:5001",
+  baseURL: "https://e-learning-backend.onrender.com",
   headers: {
     Accept: "application/json",
 
