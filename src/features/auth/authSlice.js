@@ -16,10 +16,10 @@ const initialState = {
 export const register = createAsyncThunk(
   "auth/register",
   async (student, thunkAPI) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     try {
       let checkValidity = await authService.registerStudent(student);
-
+      // navigate("/login");
       return checkValidity;
     } catch (err) {
       toast(err);

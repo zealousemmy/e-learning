@@ -23,7 +23,8 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast(message);
+      setLoading(false);
     }
     if (isLoading) {
       setLoading(true);
@@ -33,7 +34,7 @@ const SignupForm = () => {
       toast("registration successfully");
       navigate("/login");
     }
-  }, []);
+  }, [isLoading, isError, isSuccess]);
 
   const { fullname, email, regno, password, faculty, department } = formData;
 
@@ -48,11 +49,11 @@ const SignupForm = () => {
     e.preventDefault();
     setLoading(true);
     const check = await signupValidationSchema.isValid(formData);
-
     if (check === true) {
       const studentData = {
         ...formData,
       };
+      console.log(studentData);
       dispatch(register(studentData));
       setLoading(false);
       // navigate("/login");
@@ -66,6 +67,7 @@ const SignupForm = () => {
         draggable: true,
         progress: undefined,
       });
+      setLoading(false);
     }
   };
   const isAuthenticated = localStorage.getItem("token");
