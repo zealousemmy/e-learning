@@ -165,13 +165,21 @@ const MessageIndex = () => {
                           {item.course}
                           {/* <span class="badge badge-success p-1 ml-2">2</span> */}
                         </h5>
+
                         <p className="text-truncate lh-18 pt-1 text-gray fs-13">
-                          {messages[-1]?.messagesByDate[-1]
-                            ? messages[-1]?.messagesByDate[-1]?.content
+                          {messages &&
+                          messages[messages?.length - 1]?.messagesByDate[
+                            messages[messages?.length - 1]?.messagesByDate
+                              ?.length - 1
+                          ]
+                            ? messages[messages?.length - 1]?.messagesByDate[
+                                messages[messages?.length - 1]?.messagesByDate
+                                  ?.length - 1
+                              ]?.content
                             : ""}
                         </p>
                         <span class="fs-12 d-block lh-18 pt-1 text-gray">
-                          {moment(messages[-1]?._id).format("mm")}
+                          {/* {moment(messages && messages[-1]?._id).format("mm")} */}
                         </span>
                       </div>
                     </a>
