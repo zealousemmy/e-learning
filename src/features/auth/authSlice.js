@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authServices";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   user: null,
@@ -16,9 +17,10 @@ const initialState = {
 export const register = createAsyncThunk(
   "auth/register",
   async (student, thunkAPI) => {
+    // const navigate = useNavigate();
     try {
       let checkValidity = await authService.registerStudent(student);
-
+      // navigate("/login");
       return checkValidity;
     } catch (err) {
       toast(err);
@@ -33,7 +35,7 @@ export const login = createAsyncThunk(
     try {
       const data = await authService.loginStudent(student);
 
-      toast("successfully login");
+      // toast("successfully login");
       return data;
     } catch (err) {
       toast(err);
@@ -78,9 +80,11 @@ export const authSlice = createSlice({
 
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
+
       state.isRegister = true;
       state.message = action.payload.message;
       state.user = action.payload;
+
     },
 
     [register.rejected]: (state, action) => {
@@ -88,7 +92,7 @@ export const authSlice = createSlice({
       state.isError = true;
       state.isRegister = false;
       state.message = action.payload;
-      state.user = null;
+      // state.user = null;
     },
 
     [login.pending]: (state, action) => {
@@ -99,13 +103,16 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       state.tokenDetail = action.payload;
+      console.log(action, "action payload fulfilled");
     },
 
     [login.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      state.isSuccess = false;
       state.message = action.payload;
       state.user = null;
+      console.log(action, "rejected login action");
     },
 
     [registerLectural.pending]: (state, action) => {
