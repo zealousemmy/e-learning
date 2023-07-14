@@ -17,7 +17,7 @@ const SignupForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, isRegister, message } = useSelector(
     (state) => state.auth
   );
 
@@ -29,12 +29,13 @@ const SignupForm = () => {
     if (isLoading) {
       setLoading(true);
     }
-    if (isSuccess) {
-      setLoading(false);
-      toast("registration successfully");
+
+    if (isRegister) {
+      toast.success("registration successfully");
       navigate("/login");
     }
-  }, [isLoading, isError, isSuccess]);
+  }, [isRegister, isError]);
+
 
   const { fullname, email, regno, password, faculty, department } = formData;
 

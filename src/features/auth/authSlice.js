@@ -9,6 +9,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  isRegister: false,
   tokenDetail: JSON.parse(localStorage.getItem("token")) || "",
 };
 
@@ -79,13 +80,17 @@ export const authSlice = createSlice({
 
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
-      // state.user = action.payload;
+
+      state.isRegister = true;
+      state.message = action.payload.message;
+      state.user = action.payload;
+
     },
 
     [register.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      state.isRegister = false;
       state.message = action.payload;
       // state.user = null;
     },
