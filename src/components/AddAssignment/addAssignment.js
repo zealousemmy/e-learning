@@ -65,7 +65,7 @@ const AddAssignment = () => {
 
         await dispatch(uploadAssignment(payload));
 
-        setCourse({});
+        // setCourse({});
 
         dispatch(setFileDetails({}));
 
@@ -141,7 +141,7 @@ const AddAssignment = () => {
                 type={"text"}
                 name={"fullname"}
                 value={course?.fullname || ""}
-                placeholder={"input the name of the course"}
+                placeholder={"input the name of the lecturer"}
                 onChange={handlechange}
               />
             </div>

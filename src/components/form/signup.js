@@ -16,7 +16,7 @@ const SignupForm = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, isRegister, message } = useSelector(
     (state) => state.auth
   );
 
@@ -24,11 +24,11 @@ const SignupForm = () => {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess) {
+    if (isRegister) {
       toast.success("registration successfully");
       navigate("/login");
     }
-  }, []);
+  }, [isRegister, isError]);
 
   const { fullname, email, regno, password, faculty, department } = formData;
 
